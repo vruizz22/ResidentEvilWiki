@@ -3,6 +3,14 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
+
+  <!-- Previsualización de imagen -->
+  <div class="field">
+    <% if resource.imagen_perfil.attached? %>
+      <%= image_tag resource.imagen_perfil, class: "profile-preview", style: "max-width: 200px; display: block;" %>
+    <% end %>
+  </div>
+
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -13,22 +21,22 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.label :password, "Nueva contraseña" %> <i>(dejar en blanco si no quieres cambiarla)</i><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
       <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <em>Mínimo <%= @minimum_password_length %> caracteres</em>
     <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation, "Confirmar nueva contraseña" %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
   <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
+    <%= f.label :current_password, "Contraseña actual" %> <i>(necesaria para confirmar cambios)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password", required: true %>
   </div>
 
   <!-- Campos adicionales -->
@@ -36,14 +44,26 @@
     <%= f.label :nombre %><br />
     <%= f.text_field :nombre %>
   </div>
+
   <div class="field">
-    <%= f.label :descripcion %><br />
-    <%= f.text_area :descripcion %>
+    <%= f.label :descripcion, "Descripción (#{resource.descripcion.to_s.length}/500)" %><br />
+    <%= f.text_area :descripcion, 
+          maxlength: 500, 
+          rows: 4, 
+          class: "form-control",
+          data: { controller: "char-counter" } %>
+    <div class="char-counter"><span id="descripcion-counter"><%= resource.descripcion.to_s.length %></span>/500</div>
   </div>
+
   <div class="field">
-    <%= f.label :imagen_perfil %><br />
-    <%= f.file_field :imagen_perfil %>
+    <%= f.label :imagen_perfil, "Foto de perfil" %>
+    <%= f.file_field :imagen_perfil, accept: "image/jpeg, image/png" %>
+    <small class="form-text text-muted">Formatos permitidos: JPG/PNG (Máximo 5MB)</small>
+    <% if resource.errors[:imagen_perfil].any? %>
+      <div class="error-message"><%= resource.errors[:imagen_perfil].join(', ') %></div>
+    <% end %>
   </div>
+
   <div class="field">
     <%= f.label :telefono %><br />
     <%= f.text_field :telefono %>
