@@ -1,0 +1,33 @@
+<h1>Crear un nuevo blog</h1>
+
+<%= form_with(model: @blog, local: true) do |form| %>
+  <% if @blog.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@blog.errors.count, "error") %> impidieron guardar el blog:</h2>
+      <ul>
+        <% @blog.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :titulo %>
+    <%= form.text_field :titulo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :descripcion %>
+    <%= form.text_area :descripcion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tipo_publicacion %>
+    <%= form.select :tipo_publicacion, ['guía', 'reseña', 'opinión', 'noticia'] %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Crear Blog" %>
+  </div>
+<% end %>

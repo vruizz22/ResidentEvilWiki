@@ -6,11 +6,6 @@ class User < ApplicationRecord
 
   # Asociación con Active Storage
   has_one_attached :imagen_perfil
-
-  # Validaciones
-  validates :descripcion, length: { maximum: 500 }
-  validate :validate_imagen_perfil
-
   # Método Privado para validar el formato y tamaño de la imagen
   private
   def validate_imagen_perfil
@@ -23,5 +18,9 @@ class User < ApplicationRecord
     unless imagen_perfil.blob.content_type.in?(%w(image/jpeg image/png))
       errors.add(:imagen_perfil, "debe ser JPG o PNG")
     end
+  end
+  
+  def es_moderador?
+    self.admin
   end
 end
