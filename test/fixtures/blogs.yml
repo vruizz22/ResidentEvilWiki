@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  titulo: MyString
+  descripcion: MyText
+  fecha: 2025-04-18
+  tipo_publicacion: MyString
+  estado: MyString
+  id_moderador: 1
+
+two:
+  titulo: MyString
+  descripcion: MyText
+  fecha: 2025-04-18
+  tipo_publicacion: MyString
+  estado: MyString
+  id_moderador: 1
