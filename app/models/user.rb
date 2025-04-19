@@ -6,4 +6,9 @@ class User < ApplicationRecord
 
   # Asociación con Active Storage
   has_one_attached :imagen_perfil
+
+  def es_moderador?
+    self.admin
+  end
+  
 end
