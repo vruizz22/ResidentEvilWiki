@@ -36,6 +36,6 @@
 .env
 node_modules
 
-# ignorar archivos de wsl
+# eliminar archivos de wsl
 *:Zone.Identifier
-
+    
