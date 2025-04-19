@@ -3,10 +3,26 @@
 class TurboFailureApp < Devise::FailureApp
   def respond
     if request_format == :turbo_stream
+      set_custom_flash
       redirect
     else
       super
     end
+  end
+
+  private
+
+  def set_custom_flash
+    error_key = warden_message || :unauthenticated
+    
+    flash[:alert] = case error_key.to_sym
+                    when :invalid
+                      "Contraseña incorrecta."
+                    when :not_found_in_database
+                      "El correo no existe."
+                    else
+                      "Error de autenticación."
+                    end
   end
 
   def skip_format?

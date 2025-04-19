@@ -14,11 +14,18 @@
 
     <% if user_signed_in? %>
       <p>Logged in as <%= current_user.name %></p>
-      <%= link_to "Edit", edit_user_registration_path %>
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+      <%= link_to "Editar", edit_user_registration_path %>
+      <%= button_to "Cerrar Sesión", destroy_user_session_path, 
+                    method: :delete, 
+                    form: { 
+                      data: { 
+                        turbo_confirm: "¿Seguro quieres salir?",
+                        turbo_method: :delete 
+                      } 
+                    } %>
     <% else %>
-      <%= link_to "Sign in", new_user_session_path %>
-      <%= link_to "Sign up", new_user_registration_path %>
+      <%= link_to "Iniciar Sesión", new_user_session_path %>
+      <%= link_to "Registrarse", new_user_registration_path %>
     <% end %>
 
     <% if flash[:notice] %>
