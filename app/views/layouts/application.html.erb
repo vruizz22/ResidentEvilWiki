@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Prueba</title>
+    <title>ResidentEvilWiki</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,26 +10,62 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
 
-    <% if user_signed_in? %>
-      <p>Logged in as <%= current_user.nombre %></p>
-      <%= link_to "Edit", edit_user_registration_path %>
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "Iniciar Sesión", new_user_session_path %>
-      <%= link_to "Registrarse", new_user_registration_path %>
-    <% end %>
+  <body class="has-navbar-fixed-top">
 
+    <nav class="navbar is-info " role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <%= link_to "Home", root_path, class: "navbar-item" %>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasic">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasic" class="navbar-menu">
+        <div class="navbar-start">
+      
+        </div>
+
+        <div class="navbar-end">
+          <% if user_signed_in? %>
+            <div class="navbar-item">Hola, <strong><%= current_user.email %></strong></div>
+            <div class="navbar-item">
+              <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "button is-light" %>
+            </div>
+          <% else %>
+            <div class="navbar-item">
+              <div class="buttons">
+                <%= link_to "Registro", new_user_registration_path, class: "button is-light" %>
+                <%= link_to "Iniciar sesión", new_user_session_path, class: "button is-light" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mensajes flash -->
     <% if flash[:notice] %>
-      <p class="notice"><%= flash[:notice] %></p>
-    <% end %>
-
-    <% if flash[:alert] %>
-      <p class="alert"><%= flash[:alert] %></p>
+      <div class="notification is-success"><%= flash[:notice] %></div>
+    <% elsif flash[:alert] %>
+      <div class="notification is-danger"><%= flash[:alert] %></div>
     <% end %>
 
     <%= yield %>
 
+    <script>
+      document.addEventListener("turbo:load", () => {
+        const burger = document.querySelector(".navbar-burger");
+        if (!burger) return;
+        const menu = document.getElementById(burger.dataset.target);
+        burger.addEventListener("click", () => {
+          burger.classList.toggle("is-active");
+          menu.classList.toggle("is-active");
+        });
+      });
+    </script>
   </body>
 </html>
