@@ -1,0 +1,21 @@
+<div class="column is-one-third">
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title"><%= blog.titulo %></p>
+    </header>
+
+    <div class="card-content">
+        <% if blog.fecha.present? %>
+            <p class="has-text-grey is-size-7">
+            <time datetime="<%= blog.fecha %>"><%= l blog.fecha %></time>
+            </p>
+        <% end %>
+
+      <div class="content"><%= truncate(blog.descripcion, length: 140) %></div>
+    </div>
+
+    <footer class="card-footer">
+      <%= link_to "Leer más", blog_path(blog), class: "card-footer-item" %>
+    </footer>
+  </div>
+</div>
