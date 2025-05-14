@@ -1,0 +1,15 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title has-text-centered">Últimos Blogs</h1>
+
+    <% if @blogs.empty? %>
+      <div class="notification is-light has-text-centered">
+        Aún no hay publicaciones. ¡Sé el primero en contribuir!
+      </div>
+    <% else %>
+      <div class="columns is-multiline">
+        <%= render @blogs %>       
+      </div>
+    <% end %>
+  </div>
+</section>

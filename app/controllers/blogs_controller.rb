@@ -1,6 +1,16 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!, only: [:create]
 
+  def index
+    @blogs = Blog.order(created_at: :desc)
+    # para cuando tengamos moderadores, todavia no los creamos
+    #@blogs = Blog.where(estado: "publicado").order(created_at: :desc)
+  end
+
+  def show
+    @blog = Blog.find(params[:id])
+  end
+
   def create
     @blog = Blog.new(blog_params)
     @blog.fecha = Date.today
