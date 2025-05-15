@@ -1,9 +1,9 @@
-<h1>Crear Blog</h1>
+<h1 class="title">Crear Blog</h1>
 
 <%= form_with(model: @blog, local: true) do |form| %>
   <% if @blog.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@blog.errors.count, "error") %> impidieron guardar el blog:</h2>
+    <div class="notification is-danger">
+      <strong><%= pluralize(@blog.errors.count, "error") %> impidieron guardar el blog:</strong>
       <ul>
         <% @blog.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -12,28 +12,37 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :titulo %><br>
-    <%= form.text_field :titulo %>
+  <div class="field">
+    <%= form.label :titulo, class: "label" %>
+    <div class="control">
+      <%= form.text_field :titulo, class: "input" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :descripcion %><br>
-    <%= form.text_area :descripcion %>
+  <div class="field">
+    <%= form.label :descripcion, class: "label" %>
+    <div class="control">
+      <%= form.text_area :descripcion, class: "textarea" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :tipo_publicacion %><br>
-    <%= form.select :tipo_publicacion, ['guía', 'reseña', 'opinión', 'noticia'] %>
+  <div class="field">
+    <%= form.label :tipo_publicacion, class: "label" %>
+    <div class="control">
+      <%= form.select :tipo_publicacion, ['guía', 'reseña', 'opinión', 'noticia'], {}, { class: "select" } %>
+    </div>
   </div>
 
-  <div>
-  <%= form.label :etiquetas, "Etiquetas" %>
-  <%= form.text_field :etiquetas %>
+  <div class="field">
+    <%= form.label :etiquetas, "Etiquetas", class: "label" %>
+    <div class="control">
+      <%= form.text_field :etiquetas, class: "input" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.submit "Crear Blog" %>
+  <div class="field">
+    <div class="control">
+      <%= form.submit "Crear Blog", class: "button is-primary" %>
+    </div>
   </div>
-
 <% end %>
