@@ -3,8 +3,8 @@ class BlogsController < ApplicationController
 
   def create
     @blog = Blog.new(blog_params)
-    @blog.fecha = Date.today
     @blog.estado = 'pendiente'
+    @blog.id_autor = current_user.id
     #@blog.id_moderador = current_user.id if current_user.es_moderador?
 
     if @blog.save
