@@ -6,6 +6,5 @@ class Blog < ApplicationRecord
   validates :descripcion, presence: true
   validates :tipo_publicacion, inclusion: { in: ['guía', 'reseña', 'opinión', 'noticia'] }
   validates :estado, inclusion: { in: ['pendiente', 'aprobado', 'rechazado'] }
-  validates :fecha, presence: true
 end
 

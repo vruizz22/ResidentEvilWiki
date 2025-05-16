@@ -19,13 +19,13 @@ class BlogsController < ApplicationController
 
     if @blog.save
       respond_to do |format|
-        format.html { redirect_to root_path, notice: "Blog creado con éxito." }
-        format.json { render json: blog, status: :created }
+        format.html { redirect_to blog_path(@blog), notice: "Blog creado con éxito." }
+        format.json { render json: @blog, status: :created }
       end
     else
       respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: { errors: blog.errors.full_messages }, status: :unprocessable_entity }
+        format.json { render json: { errors: @blog.errors.full_messages }, status: :unprocessable_entity }
       end
     end
   end
