@@ -5,11 +5,13 @@
     </header>
 
     <div class="card-content">
-        <% if blog.fecha.present? %>
-            <p class="has-text-grey is-size-7">
-            <time datetime="<%= blog.fecha %>"><%= l blog.fecha %></time>
-            </p>
-        <% end %>
+      <% if blog.created_at.present? %>
+        <p class="has-text-grey is-size-7">
+          <time datetime="<%= blog.created_at.to_date %>">
+            <%= l blog.created_at.to_date %>
+          </time>
+        </p>
+      <% end %>
 
       <div class="content"><%= truncate(blog.descripcion, length: 140) %></div>
     </div>

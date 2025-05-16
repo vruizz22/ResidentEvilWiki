@@ -5,7 +5,11 @@
       <h1 class="title">¡Bienvenido!</h1>
       <h2 class="subtitle">La primera Wiki de Resident Evil</h2>
 
-      <%= link_to "Comenzar", "#", class: "button is-info is-medium mb-5" %>
+      <% if user_signed_in? %>
+        <%= link_to "Crear Blog", new_blog_path, class: "button is-primary is-medium mb-5" %>
+      <% else %>
+        <%= link_to "Crear Blog", new_user_session_path, class: "button is-link is-medium mb-5" %>
+      <% end %>
 
       <%= image_tag "resident_evil_wiki_logo.webp",
             alt:   "Resident Evil Wiki logo",
