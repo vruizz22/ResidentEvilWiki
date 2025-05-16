@@ -1,0 +1,56 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">Editar Blog Rechazado</h1>
+
+    <%= form_with model: @blog, url: reenviar_moderacion_blog_path(@blog), method: :patch, local: true do |form| %>
+
+      <% if @blog.errors.any? %>
+        <div class="notification is-danger">
+          <h2><%= pluralize(@blog.errors.count, "error") %> impidieron reenviar el blog:</h2>
+          <ul>
+            <% @blog.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= form.label :titulo, class: "label" %>
+        <div class="control">
+          <%= form.text_field :titulo, class: "input" %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= form.label :descripcion, class: "label" %>
+        <div class="control">
+          <%= form.text_area :descripcion, class: "textarea" %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= form.label :tipo_publicacion, class: "label" %>
+        <div class="control">
+          <%= form.select :tipo_publicacion, ['guía', 'reseña', 'opinión', 'noticia'], {}, class: "select" %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= form.label :etiquetas, class: "label" %>
+        <div class="control">
+          <%= form.text_field :etiquetas, class: "input" %>
+        </div>
+      </div>
+
+      <div class="field is-grouped mt-4">
+        <div class="control">
+          <%= form.submit "Reenviar a Moderación", class: "button is-primary" %>
+        </div>
+        <div class="control">
+          <%= link_to "Cancelar", mis_blogs_path, class: "button is-light" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get '/blogs/moderar', to: 'blogs#moderar', as: 'blogs_moderar'
+  patch '/blogs/:id/moderar', to: 'blogs#actualizar_estado', as: 'moderar_blog'
+  get '/mis_blogs', to: 'blogs#mis_blogs', as: 'mis_blogs'
+  get '/blogs/:id/editar_rechazado', to: 'blogs#editar_rechazado', as: 'editar_rechazado_blog'
+  patch '/blogs/:id/reenviar_moderacion', to: 'blogs#reenviar_moderacion', as: 'reenviar_moderacion_blog'
 
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }, 
   path: '', path_names: {sign_in: 'login', sign_out: 'logout', sign_up: 'register'}
@@ -14,5 +19,6 @@ Rails.application.routes.draw do
   
   # Ruta raíz
   root 'home#index'
-  resources :blogs 
+  resources :blogs
+  resources :solicitudes_edicion, as: "solicitud_edicion", path: "solicitudes_edicion", only: [:new, :create, :index, :update, :show]
 end
