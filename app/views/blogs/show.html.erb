@@ -24,7 +24,7 @@
     <% end %>
     <!-- Fin de la sección de adjuntos optimizados -->
     <div class="content">
-      <p><strong>Descripción:</strong></p>
+      
       <p><%= @blog.descripcion %></p>
 
       <p><strong>Tipo de publicación:</strong> <%= @blog.tipo_publicacion.capitalize %></p>
@@ -38,14 +38,14 @@
       </p>
     </div>
 
-    <% if @blog.estado == "rechazado" && @blog.mensaje_moderacion.present? %>
+    <% if @blog.estado == "rechazado" && @blog.mensaje_moderacion.present? && user_signed_in? && @blog.autor == current_user %>
       <div class="notification is-danger mt-4">
         <strong>Tu blog fue rechazado por un moderador.</strong><br>
         Motivo: <%= @blog.mensaje_moderacion %>
       </div>
-    <% elsif @blog.estado == "aprobado" %>
+    <% elsif @blog.estado == "aprobado" && user_signed_in? && @blog.autor == current_user %>
       <div class="notification is-success mt-4">
-        ✅☂¡Su blog ha sido aceptado por un moderador!☂✅
+        ✅☂¡Tu blog fue aceptado por un moderador!☂✅
       </div>
     <% end %>
 
@@ -53,12 +53,14 @@
       <%= link_to 'Volver al inicio', root_path, class: 'button is-light' %>
     </div>
 
-    <% if user_signed_in? && @blog.estado == "aprobado" %>
-        <div class="buttons mt-4">
-            <%= link_to "Solicitar edición", new_solicitudes_edicion_path(blog_id: @blog.id), class: "button is-warning" %>
-        </div>
+    <% if user_signed_in? && (
+          @blog.estado == "aprobado" ||
+          (@blog.estado == "rechazado" && @blog.autor == current_user)
+        ) %>
+      <div class="buttons mt-4">
+        <%= link_to "Solicitar edición", new_solicitud_edicion_path(blog_id: @blog.id), class: "button is-warning" %>
+      </div>
     <% end %>
-
 
   </div>
 </section>

@@ -40,9 +40,26 @@ class SolicitudesEdicionController < ApplicationController
 
   def update
     @solicitud = SolicitudEdicion.find(params[:id])
-    @solicitud.update(estado: params[:estado])
-    redirect_to solicitud_edicion_index_path, notice: "Solicitud actualizada"
+    nuevo_estado = params[:estado] || params[:solicitud_edicion][:estado]
+
+    if nuevo_estado == "aceptado"
+      blog = @solicitud.blog
+      blog.update(
+        titulo: @solicitud.titulo,
+        descripcion: @solicitud.descripcion,
+        tipo_publicacion: @solicitud.tipo_publicacion,
+        etiquetas: @solicitud.etiquetas
+      )
+    end
+
+    if @solicitud.update(estado: nuevo_estado)
+      redirect_to solicitud_edicion_index_path, notice: "Solicitud actualizada"
+    else
+      redirect_to solicitud_edicion_index_path, alert: "No se pudo actualizar"
+    end
   end
+
+
 
   private
 
