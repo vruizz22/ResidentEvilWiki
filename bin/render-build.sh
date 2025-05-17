@@ -19,3 +19,4 @@ bundle exec rails assets:clean
 
 # Migra la base de datos (si usas Free tier)
 bundle exec rails db:migrate
+bundle exec rails db:seed              
