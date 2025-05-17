@@ -3,3 +3,9 @@
 ## Link de deploy
 
 <https://mysite-vqbg.onrender.com>
+
+## Usuario Moderador
+
+- nombre: `Moderador`
+- email: `moderador@uc.cl`
+- password: `123456`
