@@ -71,7 +71,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "sassc-rails"
 gem "cloudinary", "~> 2.3"
 gem "activestorage-cloudinary-service", "~> 0.2.3"
 
