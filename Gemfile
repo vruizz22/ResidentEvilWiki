@@ -26,6 +26,8 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+gem 'active_storage_validations'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -70,3 +72,5 @@ group :test do
 end
 
 gem "sassc-rails"
+gem "cloudinary", "~> 2.3"
+gem "activestorage-cloudinary-service", "~> 0.2.3"

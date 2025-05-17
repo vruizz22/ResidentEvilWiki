@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_16_200750) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_17_030103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_16_200750) do
     t.string "etiquetas"
     t.integer "id_autor"
     t.text "mensaje_moderacion"
+    t.string "attachment"
+    t.index ["id_autor"], name: "index_blogs_on_id_autor"
   end
 
   create_table "solicitudes_edicion", force: :cascade do |t|
@@ -87,6 +89,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_16_200750) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "blogs", "users", column: "id_autor"
   add_foreign_key "solicitudes_edicion", "blogs"
   add_foreign_key "solicitudes_edicion", "users", column: "usuario_id"
 end
