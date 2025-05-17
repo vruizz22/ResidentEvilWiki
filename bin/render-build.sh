@@ -2,17 +2,6 @@
 # exit on error
 set -o errexit
 
-# Instalar dependencias del sistema (Render usa Ubuntu)
-sudo apt-get update && sudo apt-get install -y \
-    nodejs \
-    npm \
-    imagemagick \
-    libvips
-
-# Configurar Node.js y Yarn
-sudo npm install -g yarn
-yarn install
-
 bundle install
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
