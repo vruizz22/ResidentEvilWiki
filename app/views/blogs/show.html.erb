@@ -1,7 +1,28 @@
 <section class="section">
   <div class="container">
     <h1 class="title is-3"><%= @blog.titulo %></h1>
-
+    <!-- Mostrar adjunto -->
+    <% if @blog.attachment.attached? %>
+      <div class="content mb-5">
+        <% if @blog.attachment.image? %>
+          <%= image_tag @blog.attachment.variant(
+                resize_to_limit: [800, 600],
+                format: :webp,
+                quality: :auto
+              ), 
+              class: "blog-image",
+              loading: "lazy",
+              alt: "Imagen adjunta del blog" %>
+        <% elsif @blog.attachment.pdf? %>
+          <div class="box has-background-light">
+            <%= link_to "📄 Descargar PDF", 
+                  rails_blob_path(@blog.attachment, disposition: "attachment"), 
+                  class: "button is-link is-fullwidth" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <!-- Fin de la sección de adjuntos optimizados -->
     <div class="content">
       <p><strong>Descripción:</strong></p>
       <p><%= @blog.descripcion %></p>

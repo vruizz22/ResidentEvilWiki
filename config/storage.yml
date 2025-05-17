@@ -32,3 +32,11 @@ local:
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
+
+cloudinary:
+  service: Cloudinary
+  folder: blogs_attachments
+  use_secure_url: true
+  eager: # Transformaciones automáticas
+    - fetch_format: auto
+      quality: auto
