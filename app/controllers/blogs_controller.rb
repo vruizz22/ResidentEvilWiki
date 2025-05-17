@@ -86,7 +86,7 @@ class BlogsController < ApplicationController
   private
 
   def blog_params
-    params.require(:blog).permit(:titulo, :descripcion, :tipo_publicacion, :etiquetas)
+    params.require(:blog).permit(:titulo, :descripcion, :tipo_publicacion, :etiquetas, :attachment)
   end
 
   def require_moderador!

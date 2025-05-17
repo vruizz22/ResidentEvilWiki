@@ -1,0 +1,90 @@
+<%= form_with(model: blog, 
+             url: form_url, 
+             method: form_method, 
+             local: true, 
+             html: { multipart: true }) do |form| %>
+
+  <% if blog.errors.any? %>
+    <div class="notification is-danger">
+      <strong><%= pluralize(blog.errors.count, "error") %> impidieron guardar el blog:</strong>
+      <ul>
+        <% blog.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :titulo, class: "label" %>
+    <div class="control">
+      <%= form.text_field :titulo, class: "input" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :descripcion, class: "label" %>
+    <div class="control">
+      <%= form.text_area :descripcion, class: "textarea" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :tipo_publicacion, class: "label" %>
+    <div class="control">
+      <%= form.select :tipo_publicacion, ['guía', 'reseña', 'opinión', 'noticia'], {}, { class: "select" } %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :etiquetas, "Etiquetas", class: "label" %>
+    <div class="control">
+      <%= form.text_field :etiquetas, class: "input" %>
+    </div>
+  </div>
+
+  <!-- Campo para adjuntos -->
+  <div class="field">
+    <%= form.label :attachment, "Adjuntar archivo", class: "label" %>
+    <div class="control">
+      <%= form.file_field :attachment, 
+            accept: 'image/png,image/jpeg,application/pdf', 
+            class: "input",
+            data: { preview_target: "input" } %>
+    </div>
+    <% if blog.persisted? && blog.attachment&.image? %>
+      <%= image_tag blog.attachment, id: "preview", class: "mt-2", style: "max-width: 300px;" %>
+    <% else %>
+      <img id="preview" class="mt-2" style="max-width: 300px; display: none;">
+    <% end %>
+  </div>
+
+  <div class="field is-grouped mt-4">
+    <div class="control">
+      <%= form.submit submit_text, class: "button is-primary" %>
+    </div>
+    <% if local_assigns[:show_cancel] %>
+      <div class="control">
+        <%= link_to "Cancelar", cancel_path, class: "button is-light" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Script para previsualización -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const fileInput = document.querySelector('input[type="file"]');
+      const preview = document.getElementById('preview');
+      
+      fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+          preview.style.display = 'block';
+          preview.src = URL.createObjectURL(file);
+        } else {
+          preview.style.display = 'none';
+        }
+      });
+    });
+  </script>
+<% end %>
