@@ -1,10 +1,9 @@
 {
-  "scripts": {
-    "build:css": "sass ./app/assets/stylesheets/application.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules",
-    "build": "yarn build:css"
-  },
   "dependencies": {
     "bulma": "^1.0.4",
     "sass": "^1.88.0"
+  },
+  "scripts": {
+    "build:css": "sass ./app/assets/stylesheets/application.bulma.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
   }
 }
