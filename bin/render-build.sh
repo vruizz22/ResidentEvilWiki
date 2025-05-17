@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
-# exit on error
+# Exit on error
 set -o errexit
 
+# Instala gems
 bundle install
-bundle exec rails assets:precompile
+
+# Instala paquetes de Node
+yarn install                                   # <-- Instala Bulma, Sass, etc. desde package.json
+
+# Construye la hoja de estilos (bulma → app/assets/builds/application.css)
+yarn build:css                                 # <-- Toma tu application.scss e inyecta Bulma :contentReference[oaicite:0]{index=0}
+
+# Precompila los assets de Rails (incluye el CSS generado)
+bundle exec rails assets:precompile             # <-- Ahora Rails encuentra application.css en app/assets/builds :contentReference[oaicite:1]{index=1}
+
+# Limpia archivos viejos
 bundle exec rails assets:clean
 
-# If you're using a Free instance type, you need to
-# perform database migrations in the build command.
-# Uncomment the following line:
-
+# Migra la base de datos (si usas Free tier)
 bundle exec rails db:migrate
+bundle exec rails db:seed              

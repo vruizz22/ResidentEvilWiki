@@ -34,14 +34,24 @@
         </div>
 
         <div class="navbar-end">
-          <% if user_signed_in? %>
-            <div class="navbar-item">Hola, <strong><%= current_user.email %></strong></div>
-            <div class="navbar-item">
-              <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "button is-light" %>
-            </div>
-            <div class="navbar-item">
-              <%= link_to "Editar Perfil", edit_path, class: "button is-light" %>
-            </div>
+        <% if user_signed_in? %>
+        <div class="navbar-item is-flex is-align-items-center">
+          <% if current_user.imagen_perfil.attached? %>
+            <%= image_tag(
+                  current_user.imagen_perfil.variant(resize_to_fill: [32, 32]).processed,
+                  class: "is-rounded mr-2",
+                  alt: "Foto de perfil",
+                  width: 32, height: 32
+                ) %>
+          <% else %>
+            <span class="icon mr-2">
+              <i class="fas fa-user-circle fa-2x"></i>
+            </span>
+          <% end %>
+          <span class="mr-4">Hola, <strong><%= current_user.email %></strong></span>
+          <%= link_to "Editar Perfil", edit_path, class: "button is-light" %>
+          <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "button is-light ml-2" %>
+        </div>
           <% else %>
             <div class="navbar-item">
               <div class="buttons">
