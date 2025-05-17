@@ -5,14 +5,14 @@
     <% if @blog.attachment.attached? %>
       <div class="content mb-5">
         <% if @blog.attachment.image? %>
-          <%= image_tag @blog.attachment.variant(
-                resize_to_limit: [800, 600],
-                format: :webp,
-                quality: :auto
-              ), 
-              class: "blog-image",
-              loading: "lazy",
-              alt: "Imagen adjunta del blog" %>
+          <%= image_tag(
+                @blog.attachment.variant(resize_to_limit: [800, 600]).processed,
+                class: "blog-image",
+                loading: "lazy",
+                alt: "Imagen adjunta del blog"
+              ) %>
+
+
         <% elsif @blog.attachment.pdf? %>
           <div class="box has-background-light">
             <%= link_to "📄 Descargar PDF", 
