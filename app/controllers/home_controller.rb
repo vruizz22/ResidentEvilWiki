@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    render plain: "Hello, World!"
+    @blogs = Blog.order(created_at: :desc) 
   end
 end

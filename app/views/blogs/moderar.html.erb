@@ -1,0 +1,40 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">Moderar Blogs Pendientes</h1>
+
+    <% if @blogs_pendientes.any? %>
+      <% @blogs_pendientes.each do |blog| %>
+        <div class="box">
+          <h2 class="subtitle"><%= blog.titulo %></h2>
+          <p><%= blog.descripcion %></p>
+          <p class="has-text-grey is-size-7">
+            Enviado por: <%= blog.autor&.nombre || "Sin autor" %>
+          </p>
+
+          <div class="mt-4 mb-4">
+            <!-- Botón para aprobar -->
+            <%= button_to "Aprobar", moderar_blog_path(blog, estado: 'aprobado'), method: :patch, class: "button is-success" %>
+          </div>
+
+          <!-- Formulario para rechazo con mensaje -->
+          <%= form_with url: moderar_blog_path(blog), method: :patch, local: true do |f| %>
+            <%= hidden_field_tag :estado, 'rechazado' %>
+
+            <div class="field mt-2">
+              <label class="label">Motivo del rechazo</label>
+              <div class="control">
+                <%= text_area_tag :mensaje_moderacion, "", class: "textarea", placeholder: "Explica por qué fue rechazado..." %>
+              </div>
+            </div>
+
+            <div class="control mt-2">
+              <%= f.submit "Rechazar", class: "button is-danger" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="has-text-grey">No hay blogs pendientes por aprobar.</p>
+    <% end %>
+  </div>
+</section>

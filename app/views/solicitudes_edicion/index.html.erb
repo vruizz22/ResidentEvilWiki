@@ -1,0 +1,37 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">Solicitudes de Edición Pendientes</h1>
+
+    <% if @solicitudes.any? %>
+      <% @solicitudes.each do |s| %>
+        <div class="box">
+          <p><strong>Blog original:</strong> <%= s.blog.titulo %> (ID: <%= s.blog.id %>)</p>
+          <p><strong>Solicitado por:</strong> <%= s.usuario.email %></p>
+
+          <p><strong>Nueva versión propuesta:</strong></p>
+          <ul>
+            <li><strong>Título:</strong> <%= s.titulo %></li>
+            <li><strong>Descripción:</strong> <%= s.descripcion %></li>
+            <li><strong>Tipo de publicación:</strong> <%= s.tipo_publicacion %></li>
+            <li><strong>Etiquetas:</strong> <%= s.etiquetas %></li>
+          </ul>
+
+          <%= form_with url: solicitud_edicion_path(s), method: :patch, local: true do |f| %>
+            <%= hidden_field_tag :estado, "aprobado" %>
+            <%= f.submit "Aprobar cambios", class: "button is-success mr-2" %>
+          <% end %>
+
+          <%= form_with url: solicitud_edicion_path(s), method: :patch, local: true do |f| %>
+            <%= hidden_field_tag :estado, "rechazado" %>
+            <div class="field mt-2">
+              <%= f.text_area :mensaje_moderacion, placeholder: "Motivo del rechazo", class: "textarea" %>
+            </div>
+            <%= f.submit "Rechazar solicitud", class: "button is-danger" %>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No hay solicitudes pendientes.</p>
+    <% end %>
+  </div>
+</section>
