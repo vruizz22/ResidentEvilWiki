@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  
+  get '/edit', to: 'controller_name#edit', as: 'edit'
   # Ruta raíz
   root 'home#index'
   resources :blogs

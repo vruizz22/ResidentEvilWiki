@@ -39,6 +39,9 @@
             <div class="navbar-item">
               <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "button is-light" %>
             </div>
+            <div class="navbar-item">
+              <%= link_to "Editar Perfil", edit_path, class: "button is-light" %>
+            </div>
           <% else %>
             <div class="navbar-item">
               <div class="buttons">
