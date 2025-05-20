@@ -13,7 +13,7 @@
 
   <body class="has-navbar-fixed-top">
 
-    <nav class="navbar is-info" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <%= link_to "Home", root_path, class: "navbar-item" %>
 
@@ -48,7 +48,7 @@
               <i class="fas fa-user-circle fa-2x"></i>
             </span>
           <% end %>
-          <span class="mr-4">Hola, <strong><%= current_user.email %></strong></span>
+          <span class="mr-4">Hola, <strong><%= current_user.nombre %></strong></span>
           <%= link_to "Editar Perfil", edit_path, class: "button is-light" %>
           <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "button is-light ml-2" %>
         </div>
