@@ -5,8 +5,13 @@
     <% if @blog.attachment.attached? %>
       <div class="content mb-5">
         <% if @blog.attachment.image? %>
-          <%= image_tag(
-                @blog.attachment.variant(resize_to_limit: [800, 600]).processed,
+          <%= cl_image_tag(
+                @blog.attachment.key,
+                width: 800,
+                height: 600,
+                crop: :limit,        # ajusta para no recortar
+                quality: :auto,      # calidad automática
+                secure: true,
                 class: "blog-image",
                 loading: "lazy",
                 alt: "Imagen adjunta del blog"

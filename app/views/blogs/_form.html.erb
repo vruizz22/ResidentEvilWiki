@@ -53,7 +53,18 @@
             data: { preview_target: "input" } %>
     </div>
     <% if blog.persisted? && blog.attachment&.image? %>
-      <%= image_tag blog.attachment, id: "preview", class: "mt-2", style: "max-width: 300px;" %>
+        <%= cl_image_tag(
+              blog.attachment.key,           # public_id en Cloudinary
+              width: 300,                    # ancho máximo
+              crop: :limit,                  # no recorta, sólo ajusta dentro de 300px
+              format: :webp,                 # opcional: forzar WebP para optimizar
+              quality: :auto,                # calidad automática según dispositivo
+              secure: true,                  # HTTPS
+              id: "preview",
+              class: "mt-2",
+              style: "max-width: 300px;",
+              alt: "Previsualización de adjunto"
+            ) %>
     <% else %>
       <img id="preview" class="mt-2" style="max-width: 300px; display: none;">
     <% end %>

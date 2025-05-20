@@ -37,18 +37,19 @@
         <% if user_signed_in? %>
         <div class="navbar-item is-flex is-align-items-center">
           <% if current_user.imagen_perfil.attached? %>
-            <%= image_tag(
-                  current_user.imagen_perfil.variant(resize_to_fill: [32, 32]).processed,
+            <%= cl_image_tag(
+                  current_user.imagen_perfil.key,
+                  width: 32, height: 32, crop: :fill,
+                  secure: true,
                   class: "is-rounded mr-2",
-                  alt: "Foto de perfil",
-                  width: 32, height: 32
+                  alt: "Foto de perfil"
                 ) %>
           <% else %>
             <span class="icon mr-2">
               <i class="fas fa-user-circle fa-2x"></i>
             </span>
           <% end %>
-          <span class="mr-4">Hola, <strong><%= current_user.email %></strong></span>
+          <span class="mr-4">Hola, <strong><%= current_user.nombre %></strong></span>
           <%= link_to "Editar Perfil", edit_path, class: "button is-light" %>
           <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "button is-light ml-2" %>
         </div>
