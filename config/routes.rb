@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   # Ruta raíz
   root 'home#index'
   resources :blogs
-  resources :solicitudes_edicion, as: "solicitud_edicion", path: "solicitudes_edicion", only: [:new, :create, :index, :update, :show]
+  resources :solicitudes_edicion, as: "solicitud_edicion", path: "solicitudes_edicion", 
+only: [:new, :create, :index, :update, :show]
 end
