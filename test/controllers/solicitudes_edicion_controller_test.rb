@@ -51,8 +51,8 @@ class SolicitudesEdicionControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "index muestra sólo solicitudes pendientes para moderador" do
-    pend = SolicitudEdicion.create!(blog: @blog, usuario: @user, descripcion: 'x', estado: 'pendiente')
-    acep = SolicitudEdicion.create!(blog: @blog, usuario: @user, descripcion: 'y', estado: 'aceptado')
+    SolicitudEdicion.create!(blog: @blog, usuario: @user, descripcion: 'x', estado: 'pendiente')
+    SolicitudEdicion.create!(blog: @blog, usuario: @user, descripcion: 'y', estado: 'aceptado')
     sign_in @moderador
     get solicitud_edicion_index_url
     assert_response :success
