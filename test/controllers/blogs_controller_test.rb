@@ -56,16 +56,16 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
     assert_template :new
   end
 
-  test "actualizar_estado como moderador aprueba blog" do
+  test "moderar_blog como moderador aprueba blog" do
     sign_in @moderador
-    patch actualizar_estado_blogs_url(@blog), params: { estado: 'aprobado' }
+    patch moderar_blog_url(@blog), params: { estado: 'aprobado' }
     assert_redirected_to blogs_moderar_path
     assert_equal 'aprobado', @blog.reload.estado
   end
 
-  test "actualizar_estado rechaza con mensaje" do
+  test "moderar_blog rechaza con mensaje" do
     sign_in @moderador
-    patch actualizar_estado_blogs_url(@blog), params: {
+    patch moderar_blog_url(@blog), params: {
       estado: 'rechazado',
       mensaje_moderacion: 'No cumple requisitos'
     }
@@ -75,9 +75,9 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'No cumple requisitos', b.mensaje_moderacion
   end
 
-  test "actualizar_estado con estado inválido muestra alerta" do
+  test "moderar_blog con estado inválido muestra alerta" do
     sign_in @moderador
-    patch actualizar_estado_blogs_url(@blog), params: { estado: 'otro' }
+    patch moderar_blog_url(@blog), params: { estado: 'otro' }
     assert_redirected_to blogs_moderar_path
     follow_redirect!
     assert_match /Estado no válido/, flash[:alert]

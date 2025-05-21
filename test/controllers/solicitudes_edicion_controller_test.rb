@@ -16,7 +16,7 @@ class SolicitudesEdicionControllerTest < ActionDispatch::IntegrationTest
 
   test "new asigna solicitud con valores del blog" do
     sign_in @user
-    get new_blog_solicitud_edicion_url(@blog)
+    get new_solicitud_edicion_url(@blog)
     assert_response :success
     sol = assigns(:solicitud)
     assert_equal @blog.id, sol.blog_id
@@ -26,7 +26,7 @@ class SolicitudesEdicionControllerTest < ActionDispatch::IntegrationTest
   test "create guarda solicitud y redirige cuando datos válidos" do
     sign_in @user
     assert_difference 'SolicitudEdicion.count', 1 do
-      post solicitudes_edicion_index_url, params: {
+      post solicitud_edicion_index_url, params: {
         solicitud_edicion: {
           blog_id: @blog.id,
           titulo: @blog.titulo,
@@ -42,7 +42,7 @@ class SolicitudesEdicionControllerTest < ActionDispatch::IntegrationTest
 
   test "create renderiza new si falta desc" do
     sign_in @user
-    post solicitudes_edicion_index_url, params: {
+    post solicitud_edicion_index_url, params: {
       solicitud_edicion: { blog_id: @blog.id, titulo: @blog.titulo, descripcion: '', tipo_publicacion: @blog.tipo_publicacion }
     }
     assert_response :success

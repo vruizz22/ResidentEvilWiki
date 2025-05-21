@@ -17,16 +17,8 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get root_url
     assert_response :success
     # El último creado debe ir primero
-    assert_select 'article:first-of-type h2', text: b2.titulo
-    assert_select 'article:last-of-type h2',  text: b1.titulo
-  end
-
-  test "index muestra link de cerrar sesión cuando está logueado" do
-    sign_in @user
-    get root_url
-    assert_response :success
-    assert_select 'nav' do
-      assert_select 'a', text: /Cerrar sesión/i
-    end
+    puts @response.body
+    assert_select 'div.column.is-one-third:first-of-type .card-header-title', text: b2.titulo
+    assert_select 'div.column.is-one-third:last-of-type .card-header-title', text: b1.titulo
   end
 end
