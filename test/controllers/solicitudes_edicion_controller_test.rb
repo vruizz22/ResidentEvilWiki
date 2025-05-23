@@ -16,7 +16,7 @@ class SolicitudesEdicionControllerTest < ActionDispatch::IntegrationTest
 
   test "new asigna solicitud con valores del blog" do
     sign_in @user
-    get new_solicitud_edicion_url(@blog)
+    get new_solicitud_edicion_url, params: { blog_id: @blog.id }
     assert_response :success
     sol = assigns(:solicitud)
     assert_equal @blog.id, sol.blog_id
