@@ -21,6 +21,7 @@ class SolicitudesEdicionController < ApplicationController
     if @solicitud.save
       redirect_to blogs_path, notice: "Tu nueva versión fue enviada para revisión."
     else
+      @blog = Blog.find(@solicitud.blog_id)
       render :new
     end
   end
