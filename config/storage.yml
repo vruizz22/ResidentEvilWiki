@@ -35,8 +35,11 @@ local:
 
 cloudinary:
   service: Cloudinary
-  folder: blogs_attachments
+  cloud_name: <%= Rails.application.credentials.dig(:cloudinary, :cloud_name) %>
+  api_key:    <%= Rails.application.credentials.dig(:cloudinary, :api_key) %>
+  api_secret: <%= Rails.application.credentials.dig(:cloudinary, :api_secret) %>
+  folder:     blogs_attachments
   use_secure_url: true
-  eager: # Transformaciones automáticas
+  eager:
     - fetch_format: auto
       quality: auto
