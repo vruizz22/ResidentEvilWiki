@@ -17,7 +17,6 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get root_url
     assert_response :success
     # El último creado debe ir primero
-    puts @response.body
     assert_select 'div.column.is-one-third:first-of-type .card-header-title', text: b2.titulo
     assert_select 'div.column.is-one-third:last-of-type .card-header-title', text: b1.titulo
   end

@@ -13,22 +13,14 @@ class SolicitudesEdicionController < ApplicationController
     )
   end
 
-
-
   def create
     @solicitud = SolicitudEdicion.new(solicitud_params)
     @solicitud.usuario = current_user
     @solicitud.estado = "pendiente"
 
-    puts "PARAMS recibidos: #{params.inspect}"
-    puts "Solicitud válida?: #{@solicitud.valid?}"
-    puts "Errores: #{@solicitud.errors.full_messages}"
-
     if @solicitud.save
-      puts "✔️ Solicitud guardada"
       redirect_to blogs_path, notice: "Tu nueva versión fue enviada para revisión."
     else
-      puts "❌ Falló al guardar"
       render :new
     end
   end
