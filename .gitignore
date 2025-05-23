@@ -45,3 +45,6 @@ node_modules/
 /node_modules
 
 app/assets/builds/
+
+# Ignorar archivos de coverage
+coverage/
