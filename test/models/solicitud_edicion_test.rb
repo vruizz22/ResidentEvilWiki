@@ -27,4 +27,12 @@ class SolicitudEdicionTest < ActiveSupport::TestCase
     refute @sol.valid?
     assert_includes @sol.errors[:estado], "is not included in the list"
   end
+
+  test "pertenece a un blog" do
+    assert_respond_to @sol, :blog
+  end
+  
+  test "pertenece a un usuario" do
+    assert_respond_to @sol, :usuario
+  end
 end

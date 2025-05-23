@@ -96,4 +96,115 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_match /Estado no válido/, flash[:alert]
   end
+
+  test "mis_blogs solo muestra los blogs del usuario autenticado" do
+    otro_usuario = User.create!(email: 'otro@e.com', password: '123456')
+    # Blogs de distintos autores
+    propio = Blog.create!(titulo: 'Blog Propio', descripcion: 'desc', tipo_publicacion: 'noticia', estado: 'aprobado', id_autor: @user.id)
+    ajeno = Blog.create!(titulo: 'Blog Ajeno', descripcion: 'desc', tipo_publicacion: 'noticia', estado: 'aprobado', id_autor: otro_usuario.id)
+  
+    sign_in @user
+    get mis_blogs_url
+    assert_response :success
+    assert_includes assigns(:mis_blogs), propio
+    refute_includes assigns(:mis_blogs), ajeno
+  end
+  
+  test "editar_rechazado permite acceso solo al autor y si el blog está rechazado" do
+    # Blog rechazado del usuario
+    blog_rechazado = Blog.create!(
+      titulo: 'Blog Rechazado',
+      descripcion: 'desc',
+      tipo_publicacion: 'noticia',
+      estado: 'rechazado',
+      id_autor: @user.id
+    )
+  
+    # Blog aprobado del usuario
+    blog_aprobado = Blog.create!(
+      titulo: 'Blog Aprobado',
+      descripcion: 'desc',
+      tipo_publicacion: 'noticia',
+      estado: 'aprobado',
+      id_autor: @user.id
+    )
+  
+    # Blog rechazado de otro usuario
+    otro_usuario = User.create!(email: 'otro@e.com', password: '123456')
+    blog_ajeno = Blog.create!(
+      titulo: 'Blog Ajeno',
+      descripcion: 'desc',
+      tipo_publicacion: 'noticia',
+      estado: 'rechazado',
+      id_autor: otro_usuario.id
+    )
+  
+    # Caso 1: El autor accede a su blog rechazado
+    sign_in @user
+    get editar_rechazado_blog_url(blog_rechazado)
+    assert_response :success
+  
+    # Caso 2: El autor intenta editar un blog aprobado (no debe poder)
+    get editar_rechazado_blog_url(blog_aprobado)
+    assert_redirected_to root_path
+    assert_equal "No autorizado", flash[:alert]
+  
+    # Caso 3: El usuario intenta editar un blog rechazado que no es suyo
+    get editar_rechazado_blog_url(blog_ajeno)
+    assert_redirected_to root_path
+    assert_equal "No autorizado", flash[:alert]
+  end
+
+    test "reenviar_moderacion solo permite al autor reenviar blogs rechazados" do
+    # Blog rechazado del usuario
+    blog_rechazado = Blog.create!(
+      titulo: 'Blog Rechazado',
+      descripcion: 'desc',
+      tipo_publicacion: 'noticia',
+      estado: 'rechazado',
+      id_autor: @user.id
+    )
+  
+    # Blog aprobado del usuario
+    blog_aprobado = Blog.create!(
+      titulo: 'Blog Aprobado',
+      descripcion: 'desc',
+      tipo_publicacion: 'noticia',
+      estado: 'aprobado',
+      id_autor: @user.id
+    )
+  
+    # Blog rechazado de otro usuario
+    otro_usuario = User.create!(email: 'otro@e.com', password: '123456')
+    blog_ajeno = Blog.create!(
+      titulo: 'Blog Ajeno',
+      descripcion: 'desc',
+      tipo_publicacion: 'noticia',
+      estado: 'rechazado',
+      id_autor: otro_usuario.id
+    )
+  
+    # Caso 1: El autor reenvía su blog rechazado
+    sign_in @user
+    patch reenviar_moderacion_blog_url(blog_rechazado), params: {
+      blog: { titulo: 'Nuevo Título', descripcion: 'Editado', tipo_publicacion: 'noticia' }
+    }
+    assert_redirected_to mis_blogs_path
+    assert_equal 'pendiente', blog_rechazado.reload.estado
+    assert_nil blog_rechazado.reload.mensaje_moderacion
+  
+    # Caso 2: El autor intenta reenviar un blog aprobado (no debe poder)
+    patch reenviar_moderacion_blog_url(blog_aprobado), params: {
+      blog: { titulo: 'Intento', descripcion: 'No debe', tipo_publicacion: 'noticia' }
+    }
+    assert_redirected_to root_path
+    assert_equal "No autorizado", flash[:alert]
+  
+    # Caso 3: El usuario intenta reenviar un blog rechazado que no es suyo
+    patch reenviar_moderacion_blog_url(blog_ajeno), params: {
+      blog: { titulo: 'Intento', descripcion: 'No debe', tipo_publicacion: 'noticia' }
+    }
+    assert_redirected_to root_path
+    assert_equal "No autorizado", flash[:alert]
+  end
 end
