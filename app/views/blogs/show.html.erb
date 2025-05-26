@@ -21,7 +21,7 @@
         </div>
       <% end %>
       <!-- Fin de la sección de adjuntos optimizados -->
-      <div class="content mb-5" style="word-break: break-word; overflow-wrap: break-word; max-width: 100%; white-space: pre-line;">
+      <div class="content mb-5" style="word-break: break-word; overflow-wrap: break-word; max-width: 100%; white-space: pre-line; text-align: justify;">
         <p><%= @blog.descripcion %></p>
         <p><strong>Tipo de publicación:</strong> <%= @blog.tipo_publicacion.capitalize %></p>
         <% if @blog.etiquetas.present? %>
