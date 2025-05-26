@@ -15,59 +15,63 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field mb-4">
     <%= form.label :titulo, class: "label" %>
     <div class="control">
       <%= form.text_field :titulo, class: "input" %>
     </div>
   </div>
 
-  <div class="field">
+  <div class="field mb-4">
     <%= form.label :descripcion, class: "label" %>
     <div class="control">
       <%= form.text_area :descripcion, class: "textarea" %>
     </div>
   </div>
 
-  <div class="field">
+  <div class="field mb-4">
     <%= form.label :tipo_publicacion, class: "label" %>
     <div class="control">
       <%= form.select :tipo_publicacion, ['guía', 'reseña', 'opinión', 'noticia'], {}, { class: "select" } %>
     </div>
   </div>
 
-  <div class="field">
+  <div class="field mb-4">
     <%= form.label :etiquetas, "Etiquetas", class: "label" %>
+    <div id="etiquetas-container" class="mb-2"></div>
     <div class="control">
-      <%= form.text_field :etiquetas, class: "input" %>
+      <input type="text" id="etiquetas-input" class="input" placeholder="Escribe una etiqueta y presiona Enter" autocomplete="off">
+      <%= form.hidden_field :etiquetas, id: "etiquetas-hidden" %>
     </div>
   </div>
 
   <!-- Campo para adjuntos -->
-  <div class="field">
+  <div class="field mb-4" data-controller="preview">
     <%= form.label :attachment, "Adjuntar archivo", class: "label" %>
-    <div class="control">
+    <div id="drop-area" class="control" style="border: 2px dashed #ccc; padding: 100px 20px; border-radius: 8px; text-align: center; cursor: pointer;">
+      <span id="drop-text">Haz clic o arrastra una imagen aquí</span>
       <%= form.file_field :attachment, 
             accept: 'image/png,image/jpeg,application/pdf', 
             class: "input",
+            style: "display:none;",
             data: { preview_target: "input" } %>
-    </div>
-    <% if blog.persisted? && blog.attachment&.image? %>
+      <% if blog.persisted? && blog.attachment&.image? %>
         <%= cl_image_tag(
-              blog.attachment.key,           # public_id en Cloudinary
-              width: 300,                    # ancho máximo
-              crop: :limit,                  # no recorta, sólo ajusta dentro de 300px
-              format: :webp,                 # opcional: forzar WebP para optimizar
-              quality: :auto,                # calidad automática según dispositivo
-              secure: true,                  # HTTPS
+              blog.attachment.key,
+              width: 300,
+              crop: :limit,
+              format: :webp,
+              quality: :auto,
+              secure: true,
               id: "preview",
               class: "mt-2",
               style: "max-width: 300px;",
               alt: "Previsualización de adjunto"
             ) %>
-    <% else %>
-      <img id="preview" class="mt-2" style="max-width: 300px; display: none;">
-    <% end %>
+      <% else %>
+        <img id="preview" class="mt-2" style="max-width: 300px; display: none;">
+      <% end %>
+    </div>
   </div>
 
   <div class="field is-grouped mt-4">
@@ -80,22 +84,124 @@
       </div>
     <% end %>
   </div>
+<% end %>
 
-  <!-- Script para previsualización -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const fileInput = document.querySelector('input[type="file"]');
-      const preview = document.getElementById('preview');
-      
-      fileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file && file.type.startsWith('image/')) {
-          preview.style.display = 'block';
-          preview.src = URL.createObjectURL(file);
-        } else {
-          preview.style.display = 'none';
+<!-- Scripts al final del archivo -->
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    const input = document.getElementById('etiquetas-input');
+    const container = document.getElementById('etiquetas-container');
+    const hidden = document.getElementById('etiquetas-hidden');
+    if (!input || !container || !hidden) return;
+    const form = input.closest('form');
+    let etiquetas = [];
+  
+    // Si hay etiquetas precargadas (para editar)
+    if (hidden.value.trim() !== "") {
+      etiquetas = hidden.value.trim().split(/\s+/).map(e => e.replace(/^#/, ''));
+      renderEtiquetas();
+    }
+  
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (input.value.trim() !== "") {
+          agregarEtiquetasDesdeInput(input.value.trim());
+          input.value = "";
+        }
+      }
+    });
+  
+    form.addEventListener('submit', function(e) {
+      if (document.activeElement === input && input.value.trim() !== "") {
+        e.preventDefault();
+        agregarEtiquetasDesdeInput(input.value.trim());
+        input.value = "";
+      }
+    });
+  
+    function agregarEtiquetasDesdeInput(texto) {
+      // Divide el texto en palabras separadas por espacios
+      texto.split(/\s+/).forEach(function(palabra) {
+        if (palabra && !etiquetas.includes(palabra)) {
+          etiquetas.push(palabra);
         }
       });
+      renderEtiquetas();
+    }
+  
+    function eliminarEtiqueta(etiqueta) {
+      etiquetas = etiquetas.filter(e => e !== etiqueta);
+      renderEtiquetas();
+    }
+  
+    function renderEtiquetas() {
+      container.innerHTML = '';
+      etiquetas.forEach(etiqueta => {
+        const tag = document.createElement('span');
+        tag.className = 'tag is-info is-medium mr-1 mb-1';
+        tag.textContent = '#' + etiqueta;
+        // Botón para eliminar etiqueta
+        const close = document.createElement('button');
+        close.type = 'button';
+        close.className = 'delete is-small ml-1';
+        close.onclick = () => eliminarEtiqueta(etiqueta);
+        tag.appendChild(close);
+        container.appendChild(tag);
+      });
+      // Actualiza el campo oculto
+      hidden.value = etiquetas.map(e => '#' + e).join(' ');
+    }
+  });
+
+  // Script para previsualización de adjuntos
+  document.addEventListener('turbo:load', function() {
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = dropArea ? dropArea.querySelector('input[type="file"]') : null;
+    const preview = document.getElementById('preview');
+    const dropText = document.getElementById('drop-text');
+    if (!dropArea || !fileInput || !preview) return;
+
+    // Click en el área para abrir el selector de archivos
+    dropArea.addEventListener('click', function() {
+      fileInput.click();
     });
-  </script>
-<% end %>
+
+    // Drag & Drop
+    dropArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '#f0f0f0';
+    });
+
+    dropArea.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '';
+    });
+
+    dropArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '';
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        fileInput.files = e.dataTransfer.files;
+        showPreview(file);
+      }
+    });
+
+    // Preview cuando se selecciona archivo normalmente
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      showPreview(file);
+    });
+
+    function showPreview(file) {
+      if (file && file.type.startsWith('image/')) {
+        preview.style.display = 'block';
+        preview.src = URL.createObjectURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+  });
+</script>
