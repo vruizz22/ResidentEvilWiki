@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_17_030103) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_24_024320) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,6 +57,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_17_030103) do
     t.index ["id_autor"], name: "index_blogs_on_id_autor"
   end
 
+  create_table "reviews", primary_key: "id_reseña", force: :cascade do |t|
+    t.integer "id_blog", null: false
+    t.float "calificacion", null: false
+    t.text "descripcion", null: false
+    t.integer "id_usuario", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["id_blog"], name: "index_reviews_on_id_blog"
+    t.index ["id_usuario"], name: "index_reviews_on_id_usuario"
+  end
+
   create_table "solicitudes_edicion", force: :cascade do |t|
     t.bigint "blog_id", null: false
     t.bigint "usuario_id", null: false
@@ -90,6 +101,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_17_030103) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "blogs", "users", column: "id_autor"
+  add_foreign_key "reviews", "blogs", column: "id_blog"
+  add_foreign_key "reviews", "users", column: "id_usuario"
   add_foreign_key "solicitudes_edicion", "blogs"
   add_foreign_key "solicitudes_edicion", "users", column: "usuario_id"
 end
