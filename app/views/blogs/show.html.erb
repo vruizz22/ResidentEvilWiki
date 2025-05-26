@@ -100,11 +100,17 @@
     
       <!-- Listado de reseñas -->
       <% @reviews.each do |review| %>
-        <div class="box mb-5">
+        <div class="box mb-5" style="position: relative;">
           <p>
             <strong><%= review.user&.nombre || "Usuario" %></strong>
             <span class="tag is-warning is-light"> <%= review.calificacion %> ⭐</span>
             <span class="is-size-7 has-text-grey-light"> <%= review.created_at.strftime("%d/%m/%Y %H:%M") %></span>
+            <% if user_signed_in? && current_user.admin? %>
+              <%= button_to "🗑️", review_path(review), method: :delete,
+                    class: "button is-danger is-small",
+                    style: "position: absolute; top: 0; right: 0;",
+                    form: { onsubmit: "return confirm('¿Seguro que deseas borrar esta reseña?')" } %>
+            <% end %>
           </p>
           <p class="mt-3"
              style="word-break: break-word; overflow-wrap: break-word; max-width: 100%; white-space: pre-line;">
