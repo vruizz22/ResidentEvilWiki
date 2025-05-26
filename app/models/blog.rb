@@ -9,7 +9,7 @@ class Blog < ApplicationRecord
   validates :tipo_publicacion, inclusion: { in: ['guía', 'reseña', 'opinión', 'noticia'] }
   validates :estado, inclusion: { in: ['pendiente', 'aprobado', 'rechazado'] }
   validates :attachment, 
-            content_type: ['image/png', 'image/jpeg'],
+            content_type: ['image/png', 'image/jpeg', 'image/webp'],
             size: { less_than: 15.megabytes, message: "debe ser menor a 15MB" }
   has_many :solicitudes_edicion
   has_many :reviews, foreign_key: 'id_blog', dependent: :destroy
