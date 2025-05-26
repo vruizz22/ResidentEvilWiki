@@ -1,46 +1,36 @@
 <section class="section">
   <div class="container">
-    <h1 class="title is-3"><%= @blog.titulo %></h1>
-    <!-- Mostrar adjunto -->
-    <% if @blog.attachment.attached? %>
-      <div class="content mb-5">
-        <% if @blog.attachment.image? %>
-          <%= cl_image_tag(
-                @blog.attachment.key,
-                width: 800,
-                height: 600,
-                crop: :limit,        # ajusta para no recortar
-                quality: :auto,      # calidad automática
-                secure: true,
-                class: "blog-image",
-                loading: "lazy",
-                alt: "Imagen adjunta del blog"
-              ) %>
-
-
-        <% elsif @blog.attachment.pdf? %>
-          <div class="box has-background-light">
-            <%= link_to "📄 Descargar PDF", 
-                  rails_blob_path(@blog.attachment, disposition: "attachment"), 
-                  class: "button is-link is-fullwidth" %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-    <!-- Fin de la sección de adjuntos optimizados -->
-    <div class="content">
-      
-      <p><%= @blog.descripcion %></p>
-
-      <p><strong>Tipo de publicación:</strong> <%= @blog.tipo_publicacion.capitalize %></p>
-
-      <% if @blog.etiquetas.present? %>
-        <p><strong>Etiquetas:</strong> <%= @blog.etiquetas %></p>
+    <div class="has-text-centered">
+      <h1 class="title is-3 mb-5"><%= @blog.titulo %></h1>
+      <!-- Mostrar adjunto -->
+      <% if @blog.attachment.attached? %>
+        <div class="content mb-5">
+          <% if @blog.attachment.image? %>
+            <%= cl_image_tag(
+                  @blog.attachment.key,
+                  width: 800,
+                  height: 600,
+                  crop: :limit,
+                  quality: :auto,
+                  secure: true,
+                  class: "blog-image",
+                  loading: "lazy",
+                  alt: "Imagen adjunta del blog"
+                ) %>
+          <% end %>
+        </div>
       <% end %>
-
-      <p class="has-text-grey-light is-size-7">
-        Publicado el <%= @blog.created_at.strftime("%d/%m/%Y") %> por <%= @blog.autor&.nombre || "Autor desconocido" %>
-      </p>
+      <!-- Fin de la sección de adjuntos optimizados -->
+      <div class="content mb-5" style="word-break: break-word; overflow-wrap: break-word; max-width: 100%; white-space: pre-line; text-align: justify;">
+        <p><%= @blog.descripcion %></p>
+        <p><strong>Tipo de publicación:</strong> <%= @blog.tipo_publicacion.capitalize %></p>
+        <% if @blog.etiquetas.present? %>
+          <p><strong>Etiquetas:</strong> <%= @blog.etiquetas %></p>
+        <% end %>
+        <p class="has-text-grey-light is-size-7">
+          Publicado el <%= @blog.created_at.strftime("%d/%m/%Y") %> por <%= @blog.autor&.nombre || "Autor desconocido" %>
+        </p>
+      </div>
     </div>
 
     <% if @blog.estado == "rechazado" && @blog.mensaje_moderacion.present? && user_signed_in? && @blog.autor == current_user %>
@@ -55,7 +45,7 @@
     <% end %>
 
     <div class="buttons mt-4">
-      <%= link_to 'Volver al inicio', root_path, class: 'button is-light' %>
+      <%= link_to 'Volver a la lista de blogs', blogs_path, class: 'button is-light' %>
     </div>
 
     <% if user_signed_in? && (
@@ -66,6 +56,69 @@
         <%= link_to "Solicitar edición", new_solicitud_edicion_path(blog_id: @blog.id), class: "button is-warning" %>
       </div>
     <% end %>
+
+    <!-- Sección de Reseñas -->
+    <div class="box mt-6 mb-6">
+      <h2 class="title is-4 mb-4">Reseñas</h2>
+      <p class="mb-5">
+        <strong><%= @reviews.count %></strong> reseña(s) &nbsp;|&nbsp;
+        Promedio: 
+        <strong>
+          <%= @reviews.any? ? sprintf('%.2f', @reviews.average(:calificacion)) : 'N/A' %>
+        </strong> ⭐
+      </p>
+    
+      <!-- Formulario para nueva reseña -->
+      <% if user_signed_in? %>
+        <div class="mb-5">
+          <%= form_with(model: @review, url: reviews_path, local: true) do |f| %>
+            <%= f.hidden_field :id_blog, value: @blog.id %>
+            <div class="field mb-4">
+              <label class="label">Calificación</label>
+              <div class="control">
+                <%= f.number_field :calificacion, in: 1..5, step: 1, class: "input", placeholder: "1-5" %>
+              </div>
+            </div>
+            <div class="field mb-4">
+              <label class="label">Comentario</label>
+              <div class="control">
+                <%= f.text_area :descripcion, class: "textarea", placeholder: "Escribe tu reseña aquí..."%>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <%= f.submit "Publicar reseña", class: "button is-primary" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="has-text-grey mb-5">Inicia sesión para dejar una reseña.</p>
+      <% end %>
+    
+      <hr class="mb-5">
+    
+      <!-- Listado de reseñas -->
+      <% @reviews.each do |review| %>
+        <div class="box mb-5" style="position: relative;">
+          <p>
+            <strong><%= review.user&.nombre || "Usuario" %></strong>
+            <span class="tag is-warning is-light"> <%= review.calificacion %> ⭐</span>
+            <span class="is-size-7 has-text-grey-light"> <%= review.created_at.strftime("%d/%m/%Y %H:%M") %></span>
+            <% if user_signed_in? && current_user.admin? %>
+              <%= button_to "🗑️", review_path(review), method: :delete,
+                    class: "button is-danger is-small",
+                    style: "position: absolute; top: 0; right: 0;",
+                    form: { onsubmit: "return confirm('¿Seguro que deseas borrar esta reseña?')" } %>
+            <% end %>
+          </p>
+          <p class="mt-3"
+             style="word-break: break-word; overflow-wrap: break-word; max-width: 100%; white-space: pre-line;">
+            <%= review.descripcion %>
+          </p>
+        </div>
+      <% end %>
+    <!-- Fin de la sección de Reseñas -->
 
   </div>
 </section>

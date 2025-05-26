@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>ResidentEvilWiki</title>
+    <%= favicon_link_tag 'resident_evil_wiki_logo.png' %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -15,8 +16,9 @@
 
     <nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <%= link_to "Home", root_path, class: "navbar-item" %>
-
+        <%= link_to root_path, class: "navbar-item" do %>
+          <%= image_tag "resident_evil_wiki_logo.png", alt: "Logo", style: "max-width: 100px; height: auto; object-fit: contain;"%>
+        <% end %>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasic">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
