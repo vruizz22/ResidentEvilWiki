@@ -1,9 +1,9 @@
 <section class="section">
   <div class="container">
-    <h1 class="title">Mis Blogs</h1>
+    <h1 class="title mb-5">Mis Blogs</h1>
 
     <% @mis_blogs.each do |blog| %>
-      <div class="box">
+      <div class="box mb-4">
         <h2 class="subtitle"><%= blog.titulo %></h2>
         <p><strong>Estado:</strong> <%= blog.estado.capitalize %></p>
 
