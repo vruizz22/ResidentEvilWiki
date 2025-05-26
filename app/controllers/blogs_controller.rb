@@ -10,6 +10,8 @@ class BlogsController < ApplicationController
 
   def show
     @blog = Blog.find(params[:id])
+    @reviews = @blog.reviews.order(created_at: :desc)
+    @review = Review.new
   end
 
   def new
