@@ -48,14 +48,11 @@
       <%= link_to 'Volver a la lista de blogs', blogs_path, class: 'button is-light' %>
     </div>
 
-    <% if user_signed_in? && (
-          @blog.estado == "aprobado" ||
-          (@blog.estado == "rechazado" && @blog.autor == current_user)
-        ) %>
-      <div class="buttons mt-4">
-        <%= link_to "Solicitar edición", new_solicitud_edicion_path(blog_id: @blog.id), class: "button is-warning" %>
-      </div>
-    <% end %>
+		<% if user_signed_in? && @blog.autor == current_user %>
+		  <div class="buttons mt-4">
+		    <%= link_to "Solicitar edición", new_solicitud_edicion_path(blog_id: @blog.id), class: "button is-warning" %>
+		  </div>
+		<% end %>
 
     <!-- Sección de Reseñas -->
     <div class="box mt-6 mb-6">
