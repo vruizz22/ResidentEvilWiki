@@ -42,8 +42,8 @@ ruta_imagen = Rails.root.join("app/assets/images/blogs/re1.webp")
 if File.exist?(ruta_imagen)
   blog_re1.attachment.attach(
     io: File.open(ruta_imagen),
-    filename: "resident_evil_wiki_logo.png",
-    content_type: "image/jpeg"
+    filename: "re1.webp",
+    content_type: "image/webp"
   )
 end
 
@@ -76,7 +76,7 @@ ruta_imagen = Rails.root.join("app/assets/images/blogs/re2.jpg")
 if File.exist?(ruta_imagen)
   blog_re2.attachment.attach(
     io: File.open(ruta_imagen),
-    filename: "resident_evil_wiki_logo.png",
+    filename: "re2.jpg",
     content_type: "image/jpeg"
   )
 end
@@ -110,7 +110,7 @@ ruta_imagen = Rails.root.join("app/assets/images/blogs/re3.jpg")
 if File.exist?(ruta_imagen)
   blog_re3.attachment.attach(
     io: File.open(ruta_imagen),
-    filename: "resident_evil_wiki_logo.png",
+    filename: "re3.jpg",
     content_type: "image/jpeg"
   )
 end
@@ -146,7 +146,7 @@ ruta_imagen = Rails.root.join("app/assets/images/blogs/re4.jpg")
 if File.exist?(ruta_imagen)
   blog_re4.attachment.attach(
     io: File.open(ruta_imagen),
-    filename: "resident_evil_wiki_logo.png",
+    filename: "re4.jpg",
     content_type: "image/jpeg"
   )
 end
@@ -174,7 +174,7 @@ ruta_imagen = Rails.root.join("app/assets/images/blogs/re5.jpg")
 if File.exist?(ruta_imagen)
   blog_re5.attachment.attach(
     io: File.open(ruta_imagen),
-    filename: "resident_evil_wiki_logo.png",
+    filename: "re5.jpg",
     content_type: "image/jpeg"
   )
 end
@@ -206,7 +206,7 @@ ruta_imagen = Rails.root.join("app/assets/images/blogs/re6.jpg")
 if File.exist?(ruta_imagen)
   blog_re6.attachment.attach(
     io: File.open(ruta_imagen),
-    filename: "resident_evil_wiki_logo.png",
+    filename: "re6.jpg",
     content_type: "image/jpeg"
   )
 end
@@ -234,7 +234,7 @@ ruta_imagen = Rails.root.join("app/assets/images/blogs/re7.jpg")
 if File.exist?(ruta_imagen)
   blog_re7.attachment.attach(
     io: File.open(ruta_imagen),
-    filename: "resident_evil_wiki_logo.png",
+    filename: "re7.jpg",
     content_type: "image/jpeg"
   )
 end
@@ -260,7 +260,7 @@ ruta_imagen = Rails.root.join("app/assets/images/blogs/re8.jpg")
 if File.exist?(ruta_imagen)
   blog_re8.attachment.attach(
     io: File.open(ruta_imagen),
-    filename: "resident_evil_wiki_logo.png",
+    filename: "re8.jpg",
     content_type: "image/jpeg"
   )
 end
