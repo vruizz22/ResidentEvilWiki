@@ -14,6 +14,12 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def destroy
+    review = Review.find(params[:id])
+    review.destroy if current_user&.admin?
+    redirect_to blog_path(review.id_blog), notice: "Reseña eliminada."
+  end
+  
   private
 
   def review_params
