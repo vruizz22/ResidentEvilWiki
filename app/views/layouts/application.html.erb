@@ -9,6 +9,9 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <!-- FontAwesome CDN para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
 
 
@@ -78,7 +81,9 @@
     <%= yield %>
 
     <script>
-      document.addEventListener("turbo:load", () => {
+      document.addEventListener("turbo:load", navbarBurger);
+      document.addEventListener("DOMContentLoaded", navbarBurger);
+      function navbarBurger() {
         const burger = document.querySelector(".navbar-burger");
         if (!burger) return;
         const menu = document.getElementById(burger.dataset.target);
@@ -86,7 +91,7 @@
           burger.classList.toggle("is-active");
           menu.classList.toggle("is-active");
         });
-      });
+      }
     </script>
   </body>
 </html>

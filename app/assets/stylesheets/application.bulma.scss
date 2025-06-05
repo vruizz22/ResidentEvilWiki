@@ -1,5 +1,16 @@
 // @charset "utf-8";
 
+// Importa la fuente
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+
+// Paleta Resident Evil
+$family-primary: 'Rajdhani', sans-serif;
+$primary: #1a1a1a;       // Negro profundo
+$secondary: #b30000;     // Rojo sangre
+$accent: #0d8c3f;        // Verde tóxico
+$error: #ff3333;         // Rojo alerta
+$warning: #ffcc00;       // Amarillo cautela
+
 // Import a Google Font
 // @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
@@ -37,3 +48,4 @@
 // @import "bulma/sass/layout/section.sass";
 
 @import 'bulma/bulma';
+@import 'landing';

@@ -1,0 +1,31 @@
+body, html {
+  font-family: 'Rajdhani', sans-serif !important;
+}
+
+// Peso global para títulos y cuerpo
+h1, h2, h3, h4, h5, h6, .title, .subtitle {
+  font-weight: 800;
+}
+body, html, p, .content, .card-content, .section, .container {
+  font-weight: 600;
+}
+
+.landing-hero {
+  background: url('landing/bg.jpg') center center/cover no-repeat;
+}
+
+@media (max-width: 600px) {
+  .landing-hero {
+    background-position: 55% 50%;
+    background-size: cover;
+  }
+}
+
+.landing-features .icon { color: #d32f2f; }
+.landing-latest .card { transition: box-shadow .2s; &:hover { box-shadow: 0 4px 24px #0002; } }
+.landing-cta { padding: 3rem 0; }
+.landing-footer { background: #222; color: #fff; }
+
+.landing-hero.hero.is-dark {
+  color: $primary !important;
+}

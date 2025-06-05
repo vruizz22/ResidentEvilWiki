@@ -1,0 +1,25 @@
+<section class="section landing-latest">
+  <div class="container">
+    <h2 class="title is-4 has-text-centered mb-6">Últimos artículos</h2>
+    <div class="columns is-multiline">
+      <% (@latest_blogs || @blogs&.limit(3)).each do |blog| %>
+        <div class="column is-4">
+          <div class="card">
+            <% if blog.attachment&.attached? %>
+              <div class="card-image">
+                <figure class="image is-4by3">
+                  <%= image_tag blog.attachment, class: "blog-thumb" %>
+                </figure>
+              </div>
+            <% end %>
+            <div class="card-content">
+              <h3 class="title is-5"><%= blog.titulo %></h3>
+              <p><%= truncate(blog.descripcion, length: 100) %></p>
+              <a href="<%= blog_path(blog) %>" class="button is-link is-small mt-2">Leer más</a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

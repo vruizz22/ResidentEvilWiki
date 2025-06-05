@@ -1,0 +1,19 @@
+<section class="hero is-dark is-fullheight-with-navbar landing-hero">
+  <div class="hero-body has-text-primary">
+    <div class="container has-text-centered">
+      <h1 class="title is-1">Resident Evil Wiki</h1>
+      <h2 class="subtitle is-4">La enciclopedia colaborativa de la saga Resident Evil</h2>
+      <div class="buttons is-centered is-flex-direction-column mt-5">
+        <% if user_signed_in? %>
+          <%= link_to "Crear Blog", new_blog_path, class: "button is-primary is-medium mb-3" %>
+          <% if current_user.admin? %>
+            <%= link_to "Moderar Blogs", blogs_moderar_path, class: "button is-warning is-medium mb-3" %>
+            <%= link_to "Solicitudes de Edición", solicitud_edicion_index_path, class: "button is-warning is-medium mb-5" %>
+          <% end %>
+        <% else %>
+          <%= link_to "Crear Blog", new_user_session_path, class: "button is-link is-medium mb-5" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
