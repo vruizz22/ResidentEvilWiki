@@ -1,3 +1,5 @@
+// app/assets/stylesheets/landing.scss
+
 body, html {
   font-family: 'Rajdhani', sans-serif !important;
 }
@@ -10,6 +12,7 @@ body, html, p, .content, .card-content, .section, .container {
   font-weight: 600;
 }
 
+// Landing‐Hero (contenedor de la sección principal)
 .landing-hero {
   background: url('landing/bg.jpg') center center/cover no-repeat;
 }
@@ -21,11 +24,26 @@ body, html, p, .content, .card-content, .section, .container {
   }
 }
 
-.landing-features .icon { color: #d32f2f; }
-.landing-latest .card { transition: box-shadow .2s; &:hover { box-shadow: 0 4px 24px #0002; } }
-.landing-cta { padding: 3rem 0; }
-.landing-footer { background: #222; color: #fff; }
+// Iconos dentro de la sección “Features”
+.landing-features .icon {
+  color: #b30000; // verde tóxico (tu $accent)
+}
 
-.landing-hero.hero.is-dark {
-  color: $primary !important;
+// Cartas dentro de “Latest”
+.landing-latest .card {
+  transition: box-shadow .2s;
+  &:hover {
+    box-shadow: 0 4px 24px #0002;
+  }
+}
+
+// Call-to-Action
+.landing-cta {
+  padding: 3rem 0;
+}
+
+// Pie de página de la landing
+.landing-footer {
+  background: #222;
+  color: #fff;
 }

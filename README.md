@@ -39,3 +39,15 @@ y borrar todo dentro de `storage`:
 ```bash
 rm -rf storage/*
 ```
+
+### En desarrollo local
+
+Por cada cambio importante en aplication.bulma.scss, es necesario correr:
+
+```bash
+npm run build:css
+bundle exec rails assets:precompile
+bundle exec rails assets:clean
+```
+
+Esto es necesario para que los cambios se vean reflejados en el local storage y en el servidor de Rails.
