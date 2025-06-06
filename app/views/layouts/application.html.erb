@@ -82,13 +82,15 @@
 
     <script>
       document.addEventListener("turbo:load", navbarBurger);
-      document.addEventListener("DOMContentLoaded", navbarBurger);
       function navbarBurger() {
         const burger = document.querySelector(".navbar-burger");
         if (!burger) return;
         const menu = document.getElementById(burger.dataset.target);
-        burger.addEventListener("click", () => {
-          burger.classList.toggle("is-active");
+        // Elimina listeners previos para evitar duplicados
+        burger.replaceWith(burger.cloneNode(true));
+        const newBurger = document.querySelector(".navbar-burger");
+        newBurger.addEventListener("click", () => {
+          newBurger.classList.toggle("is-active");
           menu.classList.toggle("is-active");
         });
       }
