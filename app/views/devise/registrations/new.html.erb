@@ -44,10 +44,12 @@
             </div>
           </div>
 
-          <div class="field mt-5">
+          <div class="field mt-5" data-controller="preview">
             <%= f.label :imagen_perfil, "Imagen de perfil", class: "label" %>
-            <div class="control">
-              <%= f.file_field :imagen_perfil, class: "input" %>
+            <div id="drop-area" class="control" style="border: 2px dashed #ccc; padding: 100px 20px; border-radius: 8px; text-align: center; cursor: pointer;">
+              <span id="drop-text">Haz clic o arrastra una imagen aquí</span>
+              <%= f.file_field :imagen_perfil, class: "input", style: "display:none;", accept: 'image/png,image/jpeg', data: { preview_target: "input" } %>
+              <img id="preview" class="mt-2" style="max-width: 300px; display: none;">
             </div>
           </div>
 
@@ -71,3 +73,52 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Script para previsualización de imagen de perfil
+  document.addEventListener('turbo:load', function() {
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = dropArea ? dropArea.querySelector('input[type="file"]') : null;
+    const preview = document.getElementById('preview');
+    const dropText = document.getElementById('drop-text');
+    if (!dropArea || !fileInput || !preview) return;
+
+    dropArea.addEventListener('click', function() {
+      fileInput.click();
+    });
+
+    dropArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '#f0f0f0';
+    });
+
+    dropArea.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '';
+    });
+
+    dropArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '';
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        fileInput.files = e.dataTransfer.files;
+        showPreview(file);
+      }
+    });
+
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      showPreview(file);
+    });
+
+    function showPreview(file) {
+      if (file && file.type.startsWith('image/')) {
+        preview.style.display = 'block';
+        preview.src = URL.createObjectURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+  });
+</script>
