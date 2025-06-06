@@ -17,8 +17,8 @@ end
 usuario = User.find_or_create_by!(email: "autor@uc.cl") do |u|
   u.password              = "123456"
   u.password_confirmation = "123456"
-  u.nombre                = "Autor Ejemplo"
-  u.descripcion           = "Soy el autor del blog."
+  u.nombre                = "Resident Evil Expert"
+  u.descripcion           = "Soy un experto en Resident Evil."
   u.telefono              = "123456789"
   u.admin                 = false
 end
