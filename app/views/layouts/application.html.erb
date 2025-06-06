@@ -44,7 +44,7 @@
           <% if current_user.imagen_perfil.attached? %>
             <%= cl_image_tag(
                   current_user.imagen_perfil.key,
-                  width: 32, height: 32, crop: :fill,
+                  crop: :fill,
                   secure: true,
                   class: "is-rounded mr-2",
                   alt: "Foto de perfil"
