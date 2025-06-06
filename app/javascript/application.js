@@ -1,6 +1,7 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
+import "channels"
 
 // Habilita lazy loading para todas las imágenes
 document.addEventListener('DOMContentLoaded', function () {
@@ -8,4 +9,4 @@ document.addEventListener('DOMContentLoaded', function () {
     images.forEach(img => {
         img.setAttribute('loading', 'lazy');
     });
-});import "./channels"
+});
