@@ -1,0 +1,18 @@
+// Estilos para la vista de login
+.login-hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.login-hero-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-box {
+  max-width: 480px;
+  margin: auto;
+}

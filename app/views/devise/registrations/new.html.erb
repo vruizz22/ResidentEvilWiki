@@ -1,49 +1,73 @@
-<h2>Sign up</h2>
+<div class="hero is-fullheight register-hero">
+  <div class="hero-body is-justify-content-center is-align-items-center register-hero-body">
+    <div class="container">
+      <div class="box register-box has-shadow-heavy">
+        <h2 class="title is-3 has-text-centered mb-5">Crea tu cuenta</h2>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+          <div class="field mt-5">
+            <%= f.label :email, "Correo electrónico", class: "label" %>
+            <div class="control">
+              <%= f.email_field :email, class: "input", autofocus: true, autocomplete: "email" %>
+            </div>
+          </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <div class="field mt-5">
+            <%= f.label :password, "Contraseña", class: "label" %>
+            <% if @minimum_password_length %>
+              <p class="help is-info">(<%= @minimum_password_length %> caracteres mínimo)</p>
+            <% end %>
+            <div class="control">
+              <%= f.password_field :password, class: "input", autocomplete: "new-password" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :password_confirmation, "Confirmar contraseña", class: "label" %>
+            <div class="control">
+              <%= f.password_field :password_confirmation, class: "input", autocomplete: "new-password" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :nombre, "Nombre", class: "label" %>
+            <div class="control">
+              <%= f.text_field :nombre, class: "input" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :descripcion, "Descripción", class: "label" %>
+            <div class="control">
+              <%= f.text_area :descripcion, class: "textarea" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :imagen_perfil, "Imagen de perfil", class: "label" %>
+            <div class="control">
+              <%= f.file_field :imagen_perfil, class: "input" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :telefono, "Teléfono", class: "label" %>
+            <div class="control">
+              <%= f.text_field :telefono, class: "input" %>
+            </div>
+          </div>
+
+          <div class="field mt-5"> 
+            <div class="control">
+              <%= f.submit "Registrarse", class: "button is-info is-fullwidth is-medium" %>
+            </div>
+          </div>
+        <% end %>
+        <div class="has-text-centered mt-4">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
-  </div>
-
-  <div class="field">
-    <%= f.label :descripcion %><br />
-    <%= f.text_area :descripcion %>
-  </div>
-
-  <div class="field">
-    <%= f.label :imagen_perfil %><br />
-    <%= f.file_field :imagen_perfil %>
-  </div>
-
-  <div class="field">
-    <%= f.label :telefono %><br />
-    <%= f.text_field :telefono %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
