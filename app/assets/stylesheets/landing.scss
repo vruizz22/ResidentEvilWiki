@@ -78,6 +78,9 @@ body, html, p, .content, .card-content, .section, .container {
   .landing-cta .card {
     padding: 1.5rem;
   }
+  .landing-cta .column {
+    margin-inline: 0.75rem;
+  }
 }
 
 // Call-to-Action
