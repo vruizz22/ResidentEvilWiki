@@ -51,3 +51,13 @@ bundle exec rails assets:clean
 ```
 
 Esto es necesario para que los cambios se vean reflejados en el local storage y en el servidor de Rails.
+
+#### API
+
+Para no consumir en cada consulta la API, ejecuta el siguiente comando:
+
+```bash
+rails dev:cache
+```
+
+Esto hará que la API se cachee y no se consuma en cada consulta, lo cual es útil para el desarrollo local.
