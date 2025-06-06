@@ -32,6 +32,15 @@ User.find_or_create_by!(email: "melisaorchard@uc.cl") do |u|
   u.admin                 = false
 end
 
+ruta_imagen = Rails.root.join("app/assets/images/landing/bg.jpg")
+if File.exist?(ruta_imagen)
+  usuario.imagen_perfil.attach(
+    io: File.open(ruta_imagen),
+    filename: "bg.jpg",
+    content_type: "image/jpg"
+  )
+end
+
 blog_re1 = Blog.find_or_create_by!(titulo: "Resident Evil (1996): El Origen del Survival Horror y la Pesadilla en la Mansión Spencer") do |b|
   b.descripcion          = "En 1996, Capcom lanzó Resident Evil para la PlayStation original, marcando un hito en la historia de los videojuegos al definir el género del survival horror. Desarrollado por Shinji Mikami y Tokuro Fujiwara, el juego introdujo a los jugadores en una experiencia de terror y supervivencia sin precedentes, estableciendo las bases para una franquicia que perdura hasta hoy.
 
