@@ -1,8 +1,9 @@
 require "test_helper"
 
 class MessagesControllerTest < ActionDispatch::IntegrationTest
-  test "should get create" do
+  test "should redirect create if not logged in" do
     get messages_create_url
-    assert_response :success
+    assert_response :redirect
+    assert_redirected_to '/login'
   end
 end
