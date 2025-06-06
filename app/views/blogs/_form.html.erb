@@ -76,11 +76,11 @@
 
   <div class="field is-grouped mt-4">
     <div class="control">
-      <%= form.submit submit_text, class: "button is-primary" %>
+      <%= form.submit submit_text, class: "button is-success" %>
     </div>
     <% if local_assigns[:show_cancel] %>
       <div class="control">
-        <%= link_to "Cancelar", cancel_path, class: "button is-light" %>
+        <%= link_to "Cancelar", cancel_path, class: "button is-info" %>
       </div>
     <% end %>
   </div>
