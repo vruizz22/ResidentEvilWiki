@@ -1,38 +1,42 @@
 <!-- app/views/chat_rooms/show.html.erb -->
-<div id="chat-room" data-chat-room-id="<%= @chat_room.id %>">
-  <!-- Título del chat -->
-  <h2 class="title is-4">Chat de <%= @blog.titulo %></h2>
+<section class="section">
+  <div class="container">
+    <div id="chat-room" data-chat-room-id="<%= @chat_room.id %>">
+      <!-- Título del chat -->
+      <h2 class="title mb-5 is-1 has-text-centered">Chat de <%= @blog.titulo %></h2>
 
-  <!-- Contenedor de mensajes -->
-  <div class="messages box" style="max-height: 400px; overflow-y: auto;">
-    <% if @messages.any? %>
-      <%= render @messages %>
-    <% else %>
-      <p class="has-text-grey">No hay mensajes aún. ¡Sé el primero!</p>
-    <% end %>
+      <!-- Contenedor de mensajes -->
+      <div class="messages box mb-4" style="max-height: 400px; overflow-y: auto;">
+        <% if @messages.any? %>
+          <%= render @messages %>
+        <% else %>
+          <p>No hay mensajes aún. ¡Sé el primero!</p>
+        <% end %>
+      </div>
+
+      <!-- Formulario remoto para enviar mensajes -->
+      <%= form_with url: blog_chat_room_messages_path(@blog),
+                    scope: :message,
+                    local: false,
+                    html: { id: "new_message_form", class: "mt-4" } do |f| %>
+        <div class="field">
+          <div class="control mb-4">
+            <%= f.text_area :content,
+                            rows: 2,
+                            placeholder: "Escribe tu mensaje…",
+                            required: true,
+                            class: "textarea",
+                            id: "message_content" %>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <%= f.submit "Enviar",
+                         class: "button is-success",
+                         data: { disable_with: "Enviando…" } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <!-- Formulario remoto para enviar mensajes -->
-  <%= form_with url: blog_chat_room_messages_path(@blog),
-                scope: :message,
-                local: false,
-                html: { id: "new_message_form", class: "mt-4" } do |f| %>
-    <div class="field">
-      <div class="control">
-        <%= f.text_area :content,
-                        rows: 2,
-                        placeholder: "Escribe tu mensaje…",
-                        required: true,
-                        class: "textarea",
-                        id: "message_content" %>
-      </div>
-    </div>
-    <div class="field">
-      <div class="control">
-        <%= f.submit "Enviar",
-                     class: "button is-primary",
-                     data: { disable_with: "Enviando…" } %>
-      </div>
-    </div>
-  <% end %>
-</div>
+</section>

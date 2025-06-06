@@ -1,7 +1,7 @@
-<div class="box message-item <%= 'has-background-light' if message.user == current_user %>">
-  <p class="is-size-7 has-text-grey">
+<div class="box message-item mb-2">
+  <p class="is-size-7">
     <strong><%= message.user.nombre %></strong>
-    &nbsp;–&nbsp;
+    &nbsp;-&nbsp;
     <%= l(message.created_at, format: :short) %>
   </p>
   <div class="content">
