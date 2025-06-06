@@ -32,8 +32,16 @@ class RawgApiService
   # Obtiene la descripción completa del juego por ID
   def fetch_game_description(game_id)
     url = URI("#{BASE_URL}/#{game_id}?key=#{@api_key}")
-    response = Net::HTTP.get(url)
-    data = JSON.parse(response)
-    data['description_raw'] || ''
+    response = Net::HTTP.get_response(url)
+    if response.is_a?(Net::HTTPSuccess)
+      data = JSON.parse(response.body)
+      data['description_raw'] || ''
+    else
+      Rails.logger.warn "RAWG API error: \\#{response.code} \\#{response.message} - \\#{response.body.truncate(200)}"
+      ''
+    end
+  rescue JSON::ParserError => e
+    Rails.logger.error "RAWG API JSON parse error: \\#{e.message} - Body: \\#{response&.body&.truncate(200)}"
+    ''
   end
 end
