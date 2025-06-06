@@ -15,6 +15,35 @@ body, html, p, .content, .card-content, .section, .container {
 // Landing‐Hero (contenedor de la sección principal)
 .landing-hero {
   background: url('landing/bg.jpg') center center/cover no-repeat;
+  position: relative; // Asegura que el pseudo-elemento se posicione correctamente
+  overflow: hidden;   // Evita que el pseudo-elemento sobresalga
+}
+
+.landing-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,
+    /* Color de fondo según modo */
+    #fff 100%
+  );
+}
+
+@media (prefers-color-scheme: dark) {
+  .landing-hero::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0%,
+      #1a1a1a 100%
+    );
+  }
 }
 
 @media (max-width: 600px) {
@@ -26,7 +55,7 @@ body, html, p, .content, .card-content, .section, .container {
 
 // Iconos dentro de la sección “Features”
 .landing-features .icon {
-  color: #b30000; // verde tóxico (tu $accent)
+  color: #b30000; // Rojo sangre
 }
 
 // Cartas dentro de “Latest”
@@ -34,6 +63,20 @@ body, html, p, .content, .card-content, .section, .container {
   transition: box-shadow .2s;
   &:hover {
     box-shadow: 0 4px 24px #0002;
+  }
+}
+
+// Cartas dentro de “Testimonios” en landing-cta
+.landing-cta .card {
+  transition: box-shadow .2s;
+}
+.landing-cta .card:hover {
+  box-shadow: 0 4px 24px #0002;
+}
+
+@media (max-width: 600px) {
+  .landing-cta .card {
+    padding: 1.5rem;
   }
 }
 
@@ -47,3 +90,26 @@ body, html, p, .content, .card-content, .section, .container {
   background: #222;
   color: #fff;
 }
+
+.landing-title-shadow {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.landing-title-shadow::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%; 
+  height: 120%;
+  background: radial-gradient(circle, rgba(0,0,0,0.7) 60%, transparent 100%);
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+

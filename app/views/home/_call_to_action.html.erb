@@ -1,6 +1,43 @@
 <section class="section has-background-danger-light landing-cta">
   <div class="container has-text-centered">
-    <h2 class="title is-3">¿Listo para unirte a la comunidad?</h2>
-    <a href="<%= new_user_registration_path %>" class="button is-danger is-large">Regístrate</a>
+    <h2 class="title is-2 has-text-dark">¡Únete a nuestra comunidad!</h2>
+    <p class="subtitle is-5 has-text-dark mb-5 mt-5">Crea tu propio blog sobre Resident Evil y comparte tus conocimientos con el mundo.</p>
+      <div class="buttons is-centered is-flex-direction-column mt-5">
+        <% if user_signed_in? %>
+          <%= link_to "Crear Blog", new_blog_path, class: "button is-success is-large mb-3" %>
+          <% if current_user.admin? %>
+            <%= link_to "Moderar Blogs", blogs_moderar_path, class: "button is-warning is-large mb-3" %>
+            <%= link_to "Solicitudes de Edición", solicitud_edicion_index_path, class: "button is-warning is-large mb-5" %>
+          <% end %>
+        <% else %>
+          <%= link_to "Crear Blog", new_user_session_path, class: "button is-link is-large mb-5" %>
+        <% end %>
+      </div>
+    <div class="columns is-multiline mt-5">
+      <div class="column is-4">
+        <div class="card">
+          <div class="card-content">
+            <h3 class="title is-5 mb-2">Leon S. Kennedy</h3>
+            <p>"Esta wiki me ayudó a descubrir detalles de la saga que nunca había notado. ¡La comunidad es increíble y siempre encuentro información actualizada!"</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="card">
+          <div class="card-content">
+            <h3 class="title is-5 mb-2">Jill Valentine</h3>
+            <p>"Me encanta poder compartir mis teorías y leer las de otros fans. La plataforma es fácil de usar y muy completa."</p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="card">
+          <div class="card-content">
+            <h3 class="title is-5 mb-2">Chris Redfield</h3>
+            <p>"Gracias a esta página he conocido a otros apasionados de Resident Evil, ¡y he podido compartir mis propias experiencias!"</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
