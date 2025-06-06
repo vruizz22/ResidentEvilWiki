@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'messages/create'
+  get 'chat_rooms/show'
   get '/blogs/moderar', to: 'blogs#moderar', as: 'blogs_moderar'
   patch '/blogs/:id/moderar', to: 'blogs#actualizar_estado', as: 'moderar_blog'
   get '/mis_blogs', to: 'blogs#mis_blogs', as: 'mis_blogs'
@@ -19,8 +21,17 @@ Rails.application.routes.draw do
   get '/edit', to: 'controller_name#edit', as: 'edit'
   # Ruta raíz
   root 'home#index'
-  resources :blogs
+
+  # Rutas de Blogs + chat por blog
+  resources :blogs do
+    resource :chat_room, only: [:show] do
+      resources :messages, only: [:create]
+    end
+  end
   resources :reviews, only: [:create, :destroy]
   resources :solicitudes_edicion, as: "solicitud_edicion", path: "solicitudes_edicion", 
 only: [:new, :create, :index, :update, :show]
+
+# WebSocket endpoint para Action Cable
+mount ActionCable.server => '/cable'
 end

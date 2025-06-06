@@ -1,5 +1,6 @@
 class Blog < ApplicationRecord
   has_one_attached :attachment
+  has_one :chat_room, dependent: :destroy
 
   belongs_to :moderador, class_name: 'User', foreign_key: 'id_moderador', optional: true
   belongs_to :autor, class_name: 'User', foreign_key: 'id_autor', optional: true

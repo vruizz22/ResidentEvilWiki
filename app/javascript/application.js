@@ -8,4 +8,4 @@ document.addEventListener('DOMContentLoaded', function () {
     images.forEach(img => {
         img.setAttribute('loading', 'lazy');
     });
-});
+});import "./channels"
