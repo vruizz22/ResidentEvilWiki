@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_06_210748) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_06_221359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -96,6 +96,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_06_210748) do
     t.string "etiquetas"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "game_name"
     t.index ["blog_id"], name: "index_solicitudes_edicion_on_blog_id"
     t.index ["usuario_id"], name: "index_solicitudes_edicion_on_usuario_id"
   end
