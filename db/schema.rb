@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_29_223031) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_06_210748) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_29_223031) do
     t.integer "id_autor"
     t.text "mensaje_moderacion"
     t.string "attachment"
+    t.string "game_name"
     t.index ["id_autor"], name: "index_blogs_on_id_autor"
   end
 

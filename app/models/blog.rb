@@ -12,6 +12,8 @@ class Blog < ApplicationRecord
   validates :attachment, 
             content_type: ['image/png', 'image/jpeg', 'image/webp'],
             size: { less_than: 15.megabytes, message: "debe ser menor a 15MB" }
+  validates :game_name, length: { maximum: 100 }, allow_nil: true
+
   has_many :solicitudes_edicion
   has_many :reviews, foreign_key: 'id_blog', dependent: :destroy
 end
