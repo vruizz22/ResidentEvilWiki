@@ -48,11 +48,15 @@
       <%= link_to 'Volver a la lista de blogs', blogs_path, class: 'button is-light' %>
     </div>
 
-    <% if user_signed_in? && @blog.autor == current_user %>
-      <div class="buttons mt-4">
+    <% if user_signed_in? %>
+      <div class="buttons mt-4 is-justify-content-center">
+        <% if @blog.autor == current_user %>
           <%= link_to "Solicitar edición", new_solicitud_edicion_path(blog_id: @blog.id), class: "button is-warning" %>
+        <% end %>
+        <%= link_to "Ir al chat", blog_chat_room_path(@blog), class: "button is-info" %>
       </div>
     <% end %>
+
 
     <!-- Sección de Reseñas -->
     <div class="box mt-6 mb-6">

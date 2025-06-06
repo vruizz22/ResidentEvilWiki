@@ -95,6 +95,8 @@ GEM
     bootsnap (1.18.4)
       msgpack (~> 1.2)
     builder (3.3.0)
+    bulma-rails (1.0.4)
+      dartsass-rails (~> 0.5.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -114,6 +116,9 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
+    dartsass-rails (0.5.1)
+      railties (>= 6.0.0)
+      sass-embedded (~> 1.63)
     date (3.4.1)
     debug (1.10.0)
       irb (~> 1.10)
@@ -141,8 +146,37 @@ GEM
       multipart-post (~> 2.0)
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
+    ffi (1.17.2-aarch64-linux-gnu)
+    ffi (1.17.2-aarch64-linux-musl)
+    ffi (1.17.2-arm-linux-gnu)
+    ffi (1.17.2-arm-linux-musl)
+    ffi (1.17.2-arm64-darwin)
+    ffi (1.17.2-x86_64-darwin)
+    ffi (1.17.2-x86_64-linux-gnu)
+    ffi (1.17.2-x86_64-linux-musl)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (4.31.1)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-aarch64-linux-gnu)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-aarch64-linux-musl)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-arm64-darwin)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-x86_64-darwin)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-x86_64-linux-gnu)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-x86_64-linux-musl)
+      bigdecimal
+      rake (>= 13)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.1.0)
@@ -267,6 +301,30 @@ GEM
       railties (>= 5.2)
     rexml (3.4.1)
     rubyzip (2.4.1)
+    sass-embedded (1.89.1-aarch64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.1-aarch64-linux-musl)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.1-arm-linux-gnueabihf)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.1-arm-linux-musleabihf)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.1-arm64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.1-x86_64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.1-x86_64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.1-x86_64-linux-musl)
+      google-protobuf (~> 4.31)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     securerandom (0.4.1)
     selenium-webdriver (4.30.1)
       base64 (~> 0.2)
@@ -291,6 +349,7 @@ GEM
       railties (>= 6.0.0)
     stringio (3.1.5)
     thor (1.3.2)
+    tilt (2.6.0)
     timeout (0.4.3)
     turbo-rails (2.0.13)
       actionpack (>= 7.1.0)
@@ -329,6 +388,7 @@ DEPENDENCIES
   active_storage_validations
   activestorage-cloudinary-service (~> 0.2.3)
   bootsnap
+  bulma-rails
   capybara
   cloudinary (~> 2.3)
   cssbundling-rails (~> 1.4)
@@ -341,6 +401,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.1.5, >= 7.1.5.1)
   rails-controller-testing
+  sassc-rails
   selenium-webdriver
   simplecov
   sprockets-rails

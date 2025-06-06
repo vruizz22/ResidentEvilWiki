@@ -1,10 +1,7 @@
-<!-- app/views/chat_rooms/show.html.erb -->
-<div id="chat-room" data-chat-room-id="<%= @chat_room.id %>">
-  <!-- Título del chat -->
+<div id="chat-room-container" data-chat-room-id="<%= @chat_room.id %>">
   <h2 class="title is-4">Chat de <%= @blog.titulo %></h2>
 
-  <!-- Contenedor de mensajes -->
-  <div class="messages box" style="max-height: 400px; overflow-y: auto;">
+  <div id="messages-box" class="messages box" style="max-height: 400px; overflow-y: auto;">
     <% if @messages.any? %>
       <%= render @messages %>
     <% else %>
@@ -12,26 +9,22 @@
     <% end %>
   </div>
 
-  <!-- Formulario remoto para enviar mensajes -->
   <%= form_with url: blog_chat_room_messages_path(@blog),
                 scope: :message,
                 local: false,
                 html: { id: "new_message_form", class: "mt-4" } do |f| %>
     <div class="field">
       <div class="control">
-        <%= f.text_area :content,
+        <%= f.text_area :content, id: "message_content",
                         rows: 2,
                         placeholder: "Escribe tu mensaje…",
                         required: true,
-                        class: "textarea",
-                        id: "message_content" %>
+                        class: "textarea" %>
       </div>
     </div>
     <div class="field">
       <div class="control">
-        <%= f.submit "Enviar",
-                     class: "button is-primary",
-                     data: { disable_with: "Enviando…" } %>
+        <%= f.submit "Enviar", class: "button is-primary" %>
       </div>
     </div>
   <% end %>

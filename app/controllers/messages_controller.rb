@@ -19,7 +19,10 @@ class MessagesController < ApplicationController
         "chat_room_#{@chat_room.id}",
         { message: html }
       )
-      head :ok
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to blog_chat_room_path(@blog) } # fallback
+      end
     else
       head :unprocessable_entity
     end

@@ -77,6 +77,14 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  # Asegura que los assets se compilen automáticamente si no están precompilados
+  config.assets.compile = true
+
+  # Activa los digests en los nombres de archivos (application-xxxx.css)
+  config.assets.digest = true
+
+  # Asegura que Rails sirva el CSS en desarrollo aunque no esté precompilado explícitamente
+  config.assets.check_precompiled_asset = false
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

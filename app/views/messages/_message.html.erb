@@ -1,10 +1,9 @@
-<div class="box message-item <%= 'has-background-light' if message.user == current_user %>">
+<div class="box message-item has-background-light">
   <p class="is-size-7 has-text-grey">
-    <strong><%= message.user.nombre %></strong>
-    &nbsp;–&nbsp;
-    <%= l(message.created_at, format: :short) %>
+    <strong><%= message.user.nombre %></strong> &nbsp;–&nbsp;
+    <%= message.created_at.strftime("%d %b %H:%M") %>
   </p>
   <div class="content">
-    <%= simple_format(message.content) %>
+    <p><%= message.content %></p>
   </div>
 </div>

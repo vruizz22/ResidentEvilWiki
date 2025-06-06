@@ -1,0 +1,16 @@
+<turbo-stream action="append" target="messages-box">
+  <template>
+    <%= render partial: "messages/message", locals: { message: @message } %>
+  </template>
+</turbo-stream>
+
+<turbo-stream action="update" target="message_content">
+  <template>
+    <textarea id="message_content" rows="2" placeholder="Escribe tu mensaje…" required class="textarea"></textarea>
+  </template>
+</turbo-stream>
+
+<script>
+  const box = document.getElementById("messages-box");
+  if (box) box.scrollTop = box.scrollHeight;
+</script>
