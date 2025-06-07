@@ -23,6 +23,9 @@ bin/importmap json
 # Limpia archivos viejos
 bundle exec rails assets:clean
 
+# Limpia el caché de Rails
+bundle exec rails runner "Rails.cache.clear"
+
 # Migra la base de datos (si usas Free tier)
 bundle exec rails db:migrate
 bundle exec rails db:seed
