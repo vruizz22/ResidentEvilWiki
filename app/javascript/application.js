@@ -2,11 +2,11 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "channels"
-import "./navbar"
-import "./preview"
-import "./tags"
-import "./profile_preview"
-import "./chat_no_messages"
+import "navbar"
+import "preview"
+import "tags"
+import "profile_preview"
+import "chat_no_messages"
 
 // Habilita lazy loading para todas las imágenes
 document.addEventListener('DOMContentLoaded', function () {
