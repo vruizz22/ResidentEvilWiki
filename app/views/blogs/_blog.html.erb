@@ -1,46 +1,46 @@
 <div class="column is-one-third">
   <div class="card">
-    <div class="card-image">
-      <figure class="image is-4by3">
-        <% if blog.attachment&.attached? %>
-          <%= image_tag blog.attachment, class: "blog-thumb" %>
-        <% end %>
-      </figure>
-    </div>
-    <header class="card-header">
-      <h2 class="title is-5 has-text-centered mb-2 mt-4 p-4"><%= blog.titulo %></h2>
-    </header>
-
-    <div class="card-content">
-      <% if blog.created_at.present? %>
-        <p class="has-text-grey is-size-7 mb-2">
-          <time datetime="<%= blog.created_at.to_date %>">
-            <%= l blog.created_at.to_date %>
-          </time>
-        </p>
-      <% end %>
-
-      <% if blog.autor.present? %>
-        <p class="has-text-grey is-size-7 mb-2">
-          Autor: <%= blog.autor.nombre %>
-        </p>
-      <% end %>
-
-      <% if blog.etiquetas.present? %>
-        <% etiquetas = blog.etiquetas.is_a?(String) ? blog.etiquetas.split : blog.etiquetas %>
-        <p class="has-text-grey is-size-7 mb-2 blog-tags-wrap" style="word-break: break-word; overflow-wrap: break-word; max-width: 100%; white-space: pre-line; display: flex; flex-wrap: wrap; gap: 0.25em;">
-          <% etiquetas.first(3).each do |etiqueta| %>
-            <span class="tag is-link is-light mr-1"><%= etiqueta %></span>
+    <a href="<%= blog_path(blog) %>" class="is-block" style="color: inherit; text-decoration: none;">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <% if blog.attachment&.attached? %>
+            <%= image_tag blog.attachment, class: "blog-thumb" %>
           <% end %>
-        </p>
-      <% end %>
-
-      <div class="content"
-           style="word-break: break-word; overflow-wrap: break-word; max-width: 100%; white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-height: 4.5em;">
-        <%= truncate(blog.descripcion, length: 300) %>
+        </figure>
       </div>
-    </div>
+      <header class="card-header">
+        <h2 class="title is-5 has-text-centered mb-2 mt-4 p-4"><%= blog.titulo %></h2>
+      </header>
+      <div class="card-content">
+        <% if blog.created_at.present? %>
+          <p class="has-text-grey is-size-7 mb-2">
+            <time datetime="<%= blog.created_at.to_date %>">
+              <%= l blog.created_at.to_date %>
+            </time>
+          </p>
+        <% end %>
 
+        <% if blog.autor.present? %>
+          <p class="has-text-grey is-size-7 mb-2">
+            Autor: <%= blog.autor.nombre %>
+          </p>
+        <% end %>
+
+        <% if blog.etiquetas.present? %>
+          <% etiquetas = blog.etiquetas.is_a?(String) ? blog.etiquetas.split : blog.etiquetas %>
+          <p class="has-text-grey is-size-7 mb-2 blog-tags-wrap" style="word-break: break-word; overflow-wrap: break-word; max-width: 100%; white-space: pre-line; display: flex; flex-wrap: wrap; gap: 0.25em;">
+            <% etiquetas.first(3).each do |etiqueta| %>
+              <span class="tag is-link is-light mr-1"><%= etiqueta %></span>
+            <% end %>
+          </p>
+        <% end %>
+
+        <div class="content"
+             style="word-break: break-word; overflow-wrap: break-word; max-width: 100%; white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-height: 4.5em;">
+          <%= truncate(blog.descripcion, length: 300) %>
+        </div>
+      </div>
+    </a>
     <footer class="card-footer">
       <%= link_to "Leer más", blog_path(blog), class: "card-footer-item" %>
       <% if user_signed_in? && current_user.admin? %>
