@@ -14,7 +14,7 @@ class Blog < ApplicationRecord
             size: { less_than: 15.megabytes, message: "debe ser menor a 15MB" }
   validates :game_name, length: { maximum: 100 }, allow_nil: true
 
-  has_many :solicitudes_edicion, dependent: :destroy
+  has_many :solicitudes_edicion, class_name: "SolicitudEdicion", dependent: :destroy
   has_many :reviews, foreign_key: 'id_blog', dependent: :destroy
 end
 
