@@ -16,6 +16,7 @@
 
   <body class="has-navbar-fixed-top">
     <nav class="navbar is-fixed-top is-transparent" role="navigation" aria-label="main navigation">
+
       <div class="navbar-brand">
         <%= link_to root_path, class: "navbar-item" do %>
           <%= image_tag "resident_evil_wiki_logo.png", alt: "Logo", style: "max-width: 100px; height: auto; object-fit: contain;"%>
@@ -26,13 +27,31 @@
           <span aria-hidden="true"></span>
         </a>
       </div>
+
       <div id="navbarBasic" class="navbar-menu">
+
         <div class="navbar-start">
           <%= link_to "Blogs", blogs_path, class: "navbar-item" %>
           <% if user_signed_in? %>
             <%= link_to "Mis Blogs", mis_blogs_path, class: "navbar-item" %>
+            <div class="navbar-item">
+              <div class="buttons">
+                <%= link_to "Crear Blog", new_blog_path, class: "button is-success" %>
+                <% if current_user.admin? %>
+                  <%= link_to "Moderar Blogs", blogs_moderar_path, class: "button is-warning" %>
+                  <%= link_to "Solicitudes de Edición", solicitud_edicion_index_path, class: "button is-warning" %>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <div class="navbar-item">
+              <div class="buttons">
+                <%= link_to "Crear Blog", new_user_session_path, class: "button is-link" %>
+              </div>
+            </div>
           <% end %>
         </div>
+
         <div class="navbar-end">
         <% if user_signed_in? %>
         <div class="navbar-item is-flex is-align-items-center">
@@ -53,14 +72,15 @@
           <%= link_to "Editar Perfil", edit_path, class: "button is-success" %>
           <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "button is-info ml-2" %>
         </div>
-          <% else %>
-            <div class="navbar-item">
-              <div class="buttons">
-                <%= link_to "Registro", new_user_registration_path, class: "button is-info" %>
-                <%= link_to "Iniciar sesión", new_user_session_path, class: "button is-success" %>
-              </div>
+
+        <% else %>
+          <div class="navbar-item">
+            <div class="buttons">
+              <%= link_to "Registro", new_user_registration_path, class: "button is-info" %>
+              <%= link_to "Iniciar sesión", new_user_session_path, class: "button is-success" %>
             </div>
-          <% end %>
+          </div>
+        <% end %>
         </div>
       </div>
     </nav>
