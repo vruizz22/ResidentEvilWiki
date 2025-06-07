@@ -1,7 +1,7 @@
 {
   "Minitest": {
     "coverage": {
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/models/user.rb": {
+      "/home/raulz/2025-1-grupo-56/app/models/user.rb": {
         "lines": [
           1,
           null,
@@ -25,14 +25,14 @@
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/models/application_record.rb": {
+      "/home/raulz/2025-1-grupo-56/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/models/blog.rb": {
+      "/home/raulz/2025-1-grupo-56/app/models/blog.rb": {
         "lines": [
           1,
           1,
@@ -47,6 +47,8 @@
           1,
           1,
           null,
+          null,
+          1,
           null,
           1,
           1,
@@ -54,12 +56,119 @@
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/models/solicitud_edicion.rb": {
+      "/home/raulz/2025-1-grupo-56/app/models/chat_room.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/models/message.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/messages_controller.rb": {
         "lines": [
           1,
           1,
           null,
           1,
+          2,
+          2,
+          2,
+          null,
+          null,
+          null,
+          null,
+          2,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/blogs_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/chat_rooms_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/home_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/messages_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/reviews_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/solicitudes_edicion_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/models/solicitud_edicion.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
           1,
           null,
           1,
@@ -67,7 +176,7 @@
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/solicitudes_edicion_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/solicitudes_edicion_controller.rb": {
         "lines": [
           1,
           1,
@@ -113,6 +222,11 @@
           null,
           null,
           null,
+          null,
+          null,
+          null,
+          1,
+          0,
           null,
           null,
           null,
@@ -137,56 +251,7 @@
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/application_controller.rb": {
-        "lines": [
-          1,
-          1,
-          null
-        ]
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/helpers/application_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/helpers/blogs_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/helpers/chat_rooms_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/helpers/home_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/helpers/messages_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/helpers/reviews_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/helpers/solicitudes_edicion_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/chat_rooms_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/chat_rooms_controller.rb": {
         "lines": [
           1,
           1,
@@ -200,7 +265,7 @@
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/blogs_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/blogs_controller.rb": {
         "lines": [
           1,
           1,
@@ -216,6 +281,24 @@
           1,
           1,
           1,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          1,
+          null,
           null,
           null,
           1,
@@ -303,7 +386,7 @@
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/models/review.rb": {
+      "/home/raulz/2025-1-grupo-56/app/models/review.rb": {
         "lines": [
           1,
           1,
@@ -316,70 +399,29 @@
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/reviews_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/channels/chat_room_channel.rb": {
         "lines": [
           1,
           1,
           null,
           1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          null,
-          1,
-          2,
-          2,
-          2,
           null,
           null,
           1,
           null,
+          null,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/channels/application_cable/channel.rb": {
+        "lines": [
           1,
           1,
           null,
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/users/sessions_controller.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/home_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/home_controller.rb": {
         "lines": [
           1,
           1,
@@ -388,46 +430,70 @@
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/messages_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/reviews_controller.rb": {
         "lines": [
           1,
           1,
           null,
           1,
-          0,
-          0,
-          0,
+          1,
+          1,
           null,
-          null,
-          null,
-          null,
-          0,
+          1,
+          1,
           null,
           0,
-          null,
-          null,
-          null,
           0,
-          null,
-          null,
-          null,
-          0,
-          null,
           0,
           null,
           null,
           null,
           1,
+          2,
+          2,
+          2,
           null,
           null,
           1,
-          0,
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/sessions_controller.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null
         ]
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/channels/application_cable/channel.rb": {
+      "/home/raulz/2025-1-grupo-56/app/channels/application_cable/connection.rb": {
         "lines": [
           0,
           0,
@@ -436,31 +502,7 @@
         ],
         "branches": {}
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/channels/application_cable/connection.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/channels/chat_room_channel.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0
-        ],
-        "branches": {}
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/users/confirmations_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/confirmations_controller.rb": {
         "lines": [
           null,
           null,
@@ -495,7 +537,7 @@
         ],
         "branches": {}
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/users/omniauth_callbacks_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/omniauth_callbacks_controller.rb": {
         "lines": [
           null,
           null,
@@ -530,7 +572,7 @@
         ],
         "branches": {}
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/users/passwords_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/passwords_controller.rb": {
         "lines": [
           null,
           null,
@@ -569,7 +611,7 @@
         ],
         "branches": {}
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/users/registrations_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/registrations_controller.rb": {
         "lines": [
           null,
           null,
@@ -636,7 +678,7 @@
         ],
         "branches": {}
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/controllers/users/unlocks_controller.rb": {
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/unlocks_controller.rb": {
         "lines": [
           null,
           null,
@@ -671,7 +713,7 @@
         ],
         "branches": {}
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/jobs/application_job.rb": {
+      "/home/raulz/2025-1-grupo-56/app/jobs/application_job.rb": {
         "lines": [
           0,
           null,
@@ -683,7 +725,7 @@
         ],
         "branches": {}
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/mailers/application_mailer.rb": {
+      "/home/raulz/2025-1-grupo-56/app/mailers/application_mailer.rb": {
         "lines": [
           0,
           0,
@@ -692,17 +734,50 @@
         ],
         "branches": {}
       },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/models/chat_room.rb": {
+      "/home/raulz/2025-1-grupo-56/app/services/rawg_api_service.rb": {
         "lines": [
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
           0,
           0,
           0,
-          0
-        ],
-        "branches": {}
-      },
-      "/mnt/d/Victor/Repositorios/software/2025-1-grupo-56/app/models/message.rb": {
-        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
@@ -712,6 +787,817 @@
         "branches": {}
       }
     },
-    "timestamp": 1749242005
+    "timestamp": 1749265929
+  },
+  "Unit Tests": {
+    "coverage": {
+      "/home/raulz/2025-1-grupo-56/app/models/user.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/models/blog.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/home/raulz/2025-1-grupo-56/app/channels/application_cable/channel.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/channels/application_cable/connection.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/channels/chat_room_channel.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/application_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/blogs_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/chat_rooms_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/home_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/messages_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/reviews_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/solicitudes_edicion_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/confirmations_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/omniauth_callbacks_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/passwords_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/registrations_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/sessions_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/controllers/users/unlocks_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/application_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/blogs_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/chat_rooms_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/home_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/messages_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/reviews_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/helpers/solicitudes_edicion_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/jobs/application_job.rb": {
+        "lines": [
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/mailers/application_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/models/chat_room.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/models/message.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/models/review.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/models/solicitud_edicion.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/raulz/2025-1-grupo-56/app/services/rawg_api_service.rb": {
+        "lines": [
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      }
+    },
+    "timestamp": 1749265028
   }
 }
