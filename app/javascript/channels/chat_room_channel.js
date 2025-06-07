@@ -1,4 +1,4 @@
-import consumer from "./consumer"
+import consumer from "channels/consumer"
 
 document.addEventListener("turbo:load", () => {
   const chat = document.getElementById("chat-room")
