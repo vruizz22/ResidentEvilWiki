@@ -18,6 +18,7 @@ class RawgApiService
     return nil if data['results'].blank?
     game = data['results'].first
     {
+      slug: game['slug'],
       name: game['name'],
       released: game['released'],
       rating: game['rating'],

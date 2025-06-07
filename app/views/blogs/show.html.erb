@@ -73,7 +73,7 @@
             <p class="mb-2"><strong>Lanzamiento:</strong> <%= @rawg_game[:released] %></p>
             <p class="mb-2"><strong>Puntaje:</strong> <%= @rawg_game[:rating] %> (<%= @rawg_game[:ratings_count] %> votos)</p>
             <p class="mb-2"><strong>Descripción:</strong> <%= @rawg_game[:description].truncate(350) %></p>
-            <a href="https://rawg.io/games?search=<%= ERB::Util.url_encode(@rawg_game[:name]) %>" target="_blank" class="button is-link is-small mt-2">Ver más en RAWG</a>
+            <a href="https://rawg.io/games/<%= @rawg_game[:slug] %>" target="_blank" class="button is-link is-small mt-2">Ver más en RAWG</a>
           </div>
         </div>
       </div>
