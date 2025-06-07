@@ -54,6 +54,13 @@ class BlogsController < ApplicationController
     end
   end
 
+
+  def destroy
+    @blog = Blog.find(params[:id])
+    @blog.destroy if current_user&.admin?
+    redirect_to blogs_path, notice: "Blog eliminado correctamente."
+  end
+
   # ✅ Moderación por parte de administradores
   def moderar
     @blogs_pendientes = Blog.where(estado: 'pendiente')
