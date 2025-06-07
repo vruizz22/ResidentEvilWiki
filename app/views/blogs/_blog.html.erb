@@ -43,6 +43,12 @@
 
     <footer class="card-footer">
       <%= link_to "Leer más", blog_path(blog), class: "card-footer-item" %>
+      <% if user_signed_in? && current_user.admin? %>
+        <%= button_to "🗑️", blog_path(blog), method: :delete,
+              class: "button is-danger is-small",
+              style: "position: absolute; top: 0; right: 0;",
+              form: { onsubmit: "return confirm('¿Seguro que deseas borrar este blog?')" } %>
+      <% end %>
     </footer>
   </div>
 </div>
