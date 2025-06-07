@@ -14,9 +14,12 @@ yarn build:css                                 # <-- Toma tu application.scss e 
 # Precompila los assets de Rails (incluye el CSS generado)
 bundle exec rails assets:precompile             # <-- Ahora Rails encuentra application.css en app/assets/builds :contentReference[oaicite:1]{index=1}
 
+# IMPORTANTE: Genera el importmap para producción
+bin/importmap json
+
 # Limpia archivos viejos
 bundle exec rails assets:clean
 
 # Migra la base de datos (si usas Free tier)
 bundle exec rails db:migrate
-bundle exec rails db:seed              
+bundle exec rails db:seed
