@@ -14,9 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
 
-
   <body class="has-navbar-fixed-top">
-
     <nav class="navbar is-fixed-top is-transparent" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <%= link_to root_path, class: "navbar-item" do %>
@@ -28,16 +26,13 @@
           <span aria-hidden="true"></span>
         </a>
       </div>
-
       <div id="navbarBasic" class="navbar-menu">
         <div class="navbar-start">
           <%= link_to "Blogs", blogs_path, class: "navbar-item" %>
-          
           <% if user_signed_in? %>
             <%= link_to "Mis Blogs", mis_blogs_path, class: "navbar-item" %>
           <% end %>
         </div>
-
         <div class="navbar-end">
         <% if user_signed_in? %>
         <div class="navbar-item is-flex is-align-items-center">
@@ -70,7 +65,6 @@
       </div>
     </nav>
 
-
     <!-- Mensajes flash -->
     <% if flash[:notice] %>
       <div class="notification is-warning"><%= flash[:notice] %></div>
@@ -79,21 +73,5 @@
     <% end %>
 
     <%= yield %>
-
-    <script>
-      document.addEventListener("turbo:load", navbarBurger);
-      function navbarBurger() {
-        const burger = document.querySelector(".navbar-burger");
-        if (!burger) return;
-        const menu = document.getElementById(burger.dataset.target);
-        // Elimina listeners previos para evitar duplicados
-        burger.replaceWith(burger.cloneNode(true));
-        const newBurger = document.querySelector(".navbar-burger");
-        newBurger.addEventListener("click", () => {
-          newBurger.classList.toggle("is-active");
-          menu.classList.toggle("is-active");
-        });
-      }
-    </script>
   </body>
 </html>
