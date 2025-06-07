@@ -41,8 +41,13 @@ class SolicitudesEdicionController < ApplicationController
         titulo: @solicitud.titulo,
         descripcion: @solicitud.descripcion,
         tipo_publicacion: @solicitud.tipo_publicacion,
-        etiquetas: @solicitud.etiquetas
+        etiquetas: @solicitud.etiquetas,
+        game_name: @solicitud.game_name
       )
+      # Copiar adjunto si existe
+      if @solicitud.attachment.attached?
+        blog.attachment.attach(@solicitud.attachment.blob)
+      end
     end
 
     if @solicitud.update(estado: nuevo_estado)
@@ -57,7 +62,7 @@ class SolicitudesEdicionController < ApplicationController
   private
 
   def solicitud_params
-    params.require(:solicitud_edicion).permit(:titulo, :descripcion, :tipo_publicacion, :etiquetas, :blog_id)
+    params.require(:solicitud_edicion).permit(:titulo, :descripcion, :tipo_publicacion, :etiquetas, :blog_id, :game_name, :attachment)
   end
 
   def require_moderador!

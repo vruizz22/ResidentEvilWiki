@@ -1,19 +1,23 @@
 <section class="section">
   <div class="container">
-    <h1 class="title mb-5">Mis Blogs</h1>
+    <h1 class="title mb-5 is-1">Mis Blogs</h1>
 
-    <% @mis_blogs.each do |blog| %>
-      <div class="box mb-4">
-        <h2 class="subtitle"><%= blog.titulo %></h2>
-        <p><strong>Estado:</strong> <%= blog.estado.capitalize %></p>
+    <% if @mis_blogs.any? %>
+      <% @mis_blogs.each do |blog| %>
+        <div class="box mb-4">
+          <h2 class="subtitle mb-2"><%= blog.titulo %></h2>
+          <p class="mb-2"><strong>Estado:</strong> <%= blog.estado.capitalize %></p>
 
-        <% if blog.estado == "rechazado" && blog.mensaje_moderacion.present? %>
-          <p class="has-text-danger"><strong>Motivo del rechazo:</strong> <%= blog.mensaje_moderacion %></p>
-          <%= link_to "Editar y reenviar", editar_rechazado_blog_path(blog), class: "button is-warning" %>
-        <% else %>
-          <%= link_to "Ver blog", blog_path(blog), class: "button is-link" %>
-        <% end %>
-      </div>
+          <% if blog.estado == "rechazado" && blog.mensaje_moderacion.present? %>
+            <p class="has-text-danger mb-2"><strong>Motivo del rechazo:</strong> <%= blog.mensaje_moderacion %></p>
+            <%= link_to "Editar y reenviar", editar_rechazado_blog_path(blog), class: "button is-warning" %>
+          <% else %>
+            <%= link_to "Ver blog", blog_path(blog), class: "button is-link" %>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="has-text-grey">No tienes blogs creados aún.</p>
     <% end %>
   </div>
 </section>

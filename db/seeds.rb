@@ -17,10 +17,28 @@ end
 usuario = User.find_or_create_by!(email: "autor@uc.cl") do |u|
   u.password              = "123456"
   u.password_confirmation = "123456"
-  u.nombre                = "Autor Ejemplo"
-  u.descripcion           = "Soy el autor del blog."
+  u.nombre                = "Resident Evil Expert"
+  u.descripcion           = "Soy un experto en Resident Evil."
   u.telefono              = "123456789"
   u.admin                 = false
+end
+
+User.find_or_create_by!(email: "melisaorchard@uc.cl") do |u|
+  u.password              = "noolvidar"
+  u.password_confirmation = "noolvidar"
+  u.nombre                = "Coli"
+  u.descripcion           = "Me gusta programar."
+  u.telefono              = "42950100"
+  u.admin                 = false
+end
+
+ruta_imagen = Rails.root.join("app/assets/images/landing/bg.jpg")
+if File.exist?(ruta_imagen)
+  usuario.imagen_perfil.attach(
+    io: File.open(ruta_imagen),
+    filename: "bg.jpg",
+    content_type: "image/jpg"
+  )
 end
 
 blog_re1 = Blog.find_or_create_by!(titulo: "Resident Evil (1996): El Origen del Survival Horror y la Pesadilla en la Mansión Spencer") do |b|
@@ -36,6 +54,7 @@ blog_re1 = Blog.find_or_create_by!(titulo: "Resident Evil (1996): El Origen del 
   b.etiquetas            = "#ResidentEvil #SurvivalHorror #MansiónSpencer #UmbrellaCorporation #JillValentine #ChrisRedfield #AlbertWesker #VirusT #Zombis #VideojuegosClásicos #Capcom"
   b.id_autor             = usuario.id
   b.mensaje_moderacion   = "¡Todo bien!"
+  b.game_name            = "Resident Evil"
 end
 
 ruta_imagen = Rails.root.join("app/assets/images/blogs/re1.webp")
@@ -70,6 +89,7 @@ blog_re2 = Blog.find_or_create_by!(titulo: "Resident Evil 2 (1998): El Caos de R
   b.etiquetas            = "#ResidentEvil2 #LeonSKennedy #ClaireRedfield #RaccoonCity #UmbrellaCorporation #VirusT #VirusG #SurvivalHorror #Lickers #MrX #AdaWong #SherryBirkin #WilliamBirkin #ZappingSystem #PlayStation #Capcom #JuegosClásicos #Videojuegos"
   b.id_autor             = usuario.id
   b.mensaje_moderacion   = "¡Todo bien!"
+  b.game_name            = "Resident Evil 2"
 end
 
 ruta_imagen = Rails.root.join("app/assets/images/blogs/re2.jpg")
@@ -104,6 +124,7 @@ blog_re3 = Blog.find_or_create_by!(titulo: "Resident Evil 3: Nemesis (1999): La 
   b.etiquetas            = "#ResidentEvil3 #Nemesis #JillValentine #RaccoonCity #UmbrellaCorporation #VirusT #SurvivalHorror #CarlosOliveira #TheMercenaries #DrainDeimos #HunterGamma #GraveDigger #VideojuegosClásicos #Capcom #PlayStation"
   b.id_autor             = usuario.id
   b.mensaje_moderacion   = "¡Todo bien!"
+  b.game_name            = "Resident Evil 3"
 end
 
 ruta_imagen = Rails.root.join("app/assets/images/blogs/re3.jpg")
@@ -140,6 +161,7 @@ blog_re4 = Blog.find_or_create_by!(titulo: "Resident Evil 4 (2005): La revoluci�
   b.etiquetas            = "#ResidentEvil4 #LeonSKennedy #SurvivalHorror #LasPlagas #Ganados #Capcom #Videojuegos #Acción #Terror #CámaraAlHombro #Revolución #Clásico"
   b.id_autor             = usuario.id
   b.mensaje_moderacion   = "¡Todo bien!"
+  b.game_name            = "Resident Evil 4"
 end
 
 ruta_imagen = Rails.root.join("app/assets/images/blogs/re4.jpg")
@@ -168,6 +190,7 @@ blog_re5 = Blog.find_or_create_by!(titulo: "Resident Evil 5 (2009): Acción coop
   b.etiquetas            = "#ResidentEvil5 #ChrisRedfield #ShevaAlomar #Kijuju #Uroboros #Majini #Cooperativo #Acción #Capcom"
   b.id_autor             = usuario.id
   b.mensaje_moderacion   = "¡Todo bien!"
+  b.game_name            = "Resident Evil 5"
 end
 
 ruta_imagen = Rails.root.join("app/assets/images/blogs/re5.jpg")
@@ -200,6 +223,7 @@ blog_re6 = Blog.find_or_create_by!(titulo: "Resident Evil 6 (2012): La evolució
   b.etiquetas            = "#ResidentEvil6 #LeonSKennedy #ChrisRedfield #JakeMuller #AdaWong #VirusC #Acción #Capcom"
   b.id_autor             = usuario.id
   b.mensaje_moderacion   = "¡Todo bien!"
+  b.game_name            = "Resident Evil 6"
 end
 
 ruta_imagen = Rails.root.join("app/assets/images/blogs/re6.jpg")
@@ -228,6 +252,7 @@ Recompensas: munición infinita y trofeo."
   b.etiquetas            = "#ResidentEvil7 #ModoManicomio #Guía #SurvivalHorror #EthanWinters #FamiliaBaker"
   b.id_autor             = usuario.id
   b.mensaje_moderacion   = "¡Todo bien!"
+  b.game_name            = "Resident Evil 7"
 end
 
 ruta_imagen = Rails.root.join("app/assets/images/blogs/re7.jpg")
@@ -254,6 +279,7 @@ blog_re8 = Blog.find_or_create_by!(titulo: "Resident Evil Village: Entre la trad
   b.etiquetas            = "#ResidentEvilVillage #ResidentEvil8 #SurvivalHorror #EthanWinters #LadyDimitrescu"
   b.id_autor             = usuario.id
   b.mensaje_moderacion   = "¡Todo bien!"
+  b.game_name            = "Resident Evil Village"
 end
 
 ruta_imagen = Rails.root.join("app/assets/images/blogs/re8.jpg")

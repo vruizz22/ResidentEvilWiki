@@ -25,8 +25,8 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
     get blogs_url
     assert_response :success
     # El último creado debe ir primero
-    assert_select 'div.column.is-one-third:first-of-type .card-header-title', text: b2.titulo
-    assert_select 'div.column.is-one-third:last-of-type .card-header-title', text: b1.titulo
+    assert_select 'div.column.is-one-third:first-of-type h2.title', text: b2.titulo
+    assert_select 'div.column.is-one-third:last-of-type h2.title', text: b1.titulo
   end
 
   test "index asigna sólo blogs aprobados" do

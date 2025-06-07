@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_24_024320) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_06_221359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,7 +54,25 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_24_024320) do
     t.integer "id_autor"
     t.text "mensaje_moderacion"
     t.string "attachment"
+    t.string "game_name"
     t.index ["id_autor"], name: "index_blogs_on_id_autor"
+  end
+
+  create_table "chat_rooms", force: :cascade do |t|
+    t.bigint "blog_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blog_id"], name: "index_chat_rooms_on_blog_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "chat_room_id", null: false
+    t.bigint "user_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "reviews", primary_key: "id_reseña", force: :cascade do |t|
@@ -78,6 +96,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_24_024320) do
     t.string "etiquetas"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "game_name"
     t.index ["blog_id"], name: "index_solicitudes_edicion_on_blog_id"
     t.index ["usuario_id"], name: "index_solicitudes_edicion_on_usuario_id"
   end
@@ -101,6 +120,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_24_024320) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "blogs", "users", column: "id_autor"
+  add_foreign_key "chat_rooms", "blogs"
+  add_foreign_key "messages", "chat_rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "reviews", "blogs", column: "id_blog"
   add_foreign_key "reviews", "users", column: "id_usuario"
   add_foreign_key "solicitudes_edicion", "blogs"

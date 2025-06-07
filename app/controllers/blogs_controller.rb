@@ -12,6 +12,24 @@ class BlogsController < ApplicationController
     @blog = Blog.find(params[:id])
     @reviews = @blog.reviews.order(created_at: :desc)
     @review = Review.new
+
+    # Integración RAWG: solo si hay game_name
+    if @blog.game_name.present?
+      require Rails.root.join('app/services/rawg_api_service')
+      api_key = Rails.application.credentials.rawg_api_key || ENV['RAWG_API_KEY']
+      if api_key.present?
+        cache_key = "rawg_game_#{@blog.game_name.parameterize}" # clave única por nombre de juego
+        @rawg_game = Rails.cache.fetch(cache_key, expires_in: 12.hours) do
+          Rails.logger.info "Consultando la API de RAWG para: #{@blog.game_name}"
+          rawg_service = RawgApiService.new(api_key)
+          rawg_service.search_game(@blog.game_name)
+        end
+      else
+        @rawg_game = nil
+      end
+    else
+      @rawg_game = nil
+    end
   end
 
   def new
@@ -88,7 +106,7 @@ class BlogsController < ApplicationController
   private
 
   def blog_params
-    params.require(:blog).permit(:titulo, :descripcion, :tipo_publicacion, :etiquetas, :attachment)
+    params.require(:blog).permit(:titulo, :descripcion, :tipo_publicacion, :etiquetas, :attachment, :game_name)
   end
 
   def require_moderador!

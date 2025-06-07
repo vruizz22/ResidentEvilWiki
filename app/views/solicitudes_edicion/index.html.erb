@@ -1,30 +1,50 @@
 <section class="section">
   <div class="container">
-    <h1 class="title">Solicitudes de Edición Pendientes</h1>
+    <h1 class="title mb-5 is-1">Solicitudes de Edición Pendientes</h1>
 
     <% if @solicitudes.any? %>
       <% @solicitudes.each do |s| %>
-        <div class="box">
-          <p><strong>Blog original:</strong> <%= s.blog.titulo %> (ID: <%= s.blog.id %>)</p>
-          <p><strong>Solicitado por:</strong> <%= s.usuario.email %></p>
+        <div class="box mb-6">
+          <p class="mb-2"><strong>Blog original:</strong> <%= s.blog.titulo %> (ID: <%= s.blog.id %>)</p>
+          <p class="mb-2"><strong>Solicitado por:</strong> <%= s.usuario.email %></p>
 
-          <p><strong>Nueva versión propuesta:</strong></p>
+          <p class="mb-2"><strong>Nueva versión propuesta:</strong></p>
           <ul>
-            <li><strong>Título:</strong> <%= s.titulo %></li>
-            <li><strong>Descripción:</strong> <%= s.descripcion %></li>
-            <li><strong>Tipo de publicación:</strong> <%= s.tipo_publicacion %></li>
-            <li><strong>Etiquetas:</strong> <%= s.etiquetas %></li>
+            <li><p class="mb-2"><strong>Título:</strong> <%= s.titulo %></p></li>
+            <li><p class="mb-2"><strong>Descripción:</strong> <%= s.descripcion %></p></li>
+            <li><p class="mb-2"><strong>Tipo de publicación:</strong> <%= s.tipo_publicacion %></p></li>
+            <li><p class="mb-4"><strong>Etiquetas:</strong> <%= s.etiquetas %></p></li>
+            <li><p class="mb-2"><strong>Nombre del juego:</strong> <%= s.game_name.presence || 'No especificado' %></p></li>
+            <% if s.attachment.attached? %>
+              <li class="mb-2">
+                <strong>Imagen propuesta:</strong><br>
+                <% if s.attachment.image? %>
+                  <%= cl_image_tag(
+                        s.attachment.key,
+                        width: 300,
+                        crop: :limit,
+                        format: :webp,
+                        quality: :auto,
+                        secure: true,
+                        class: "mt-2 mb-2",
+                        style: "max-width: 300px; border-radius: 8px;"
+                      ) %>
+                <% else %>
+                  <%= link_to 'Ver archivo adjunto', url_for(s.attachment), target: '_blank' %>
+                <% end %>
+              </li>
+            <% end %>
           </ul>
 
           <%= form_with url: solicitud_edicion_path(s), method: :patch, local: true do |f| %>
             <%= hidden_field_tag :estado, "aceptado" %>
-            <%= f.submit "Aprobar cambios", class: "button is-success mr-2" %>
+            <%= f.submit "Aprobar cambios", class: "button is-success mr-2 mb-4" %>
           <% end %>
 
           <%= form_with url: solicitud_edicion_path(s), method: :patch, local: true do |f| %>
             <%= hidden_field_tag :estado, "rechazado" %>
             <div class="field mt-2">
-              <%= f.text_area :mensaje_moderacion, placeholder: "Motivo del rechazo", class: "textarea" %>
+              <%= f.text_area :mensaje_moderacion, placeholder: "Motivo del rechazo", class: "textarea mb-5" %>
             </div>
             <%= f.submit "Rechazar solicitud", class: "button is-danger" %>
           <% end %>

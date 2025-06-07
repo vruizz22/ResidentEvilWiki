@@ -48,9 +48,34 @@
       <%= link_to 'Volver a la lista de blogs', blogs_path, class: 'button is-light' %>
     </div>
 
+    <div class="buttons mt-4"> 
+      <%= link_to 'Ir al chat', blog_chat_room_path(@blog), class: 'button is-success' %>  
+    </div>
+
     <% if user_signed_in? && @blog.autor == current_user %>
       <div class="buttons mt-4">
-          <%= link_to "Solicitar edición", new_solicitud_edicion_path(blog_id: @blog.id), class: "button is-warning" %>
+          <%= link_to "Solicitar edición", new_solicitud_edicion_path(blog_id: @blog.id), class: "button is-info" %>
+      </div>
+    <% end %>
+
+
+    <% if @rawg_game.present? %>
+      <div class="box mt-6 mb-6">
+        <div class="columns is-vcentered">
+          <div class="column is-one-third">
+            <% if @rawg_game[:background_image].present? %>
+              <img src="<%= @rawg_game[:background_image] %>" alt="Imagen del juego" style="max-width:100%; border-radius: 10px;" />
+            <% end %>
+          </div>
+          <div class="column">
+            <h2 class="title is-4" style="color: #b30000;">Ficha del juego</h2>
+            <p class="mb-2"><strong>Nombre:</strong> <%= @rawg_game[:name] %></p>
+            <p class="mb-2"><strong>Lanzamiento:</strong> <%= @rawg_game[:released] %></p>
+            <p class="mb-2"><strong>Puntaje:</strong> <%= @rawg_game[:rating] %> (<%= @rawg_game[:ratings_count] %> votos)</p>
+            <p class="mb-2"><strong>Descripción:</strong> <%= @rawg_game[:description].truncate(350) %></p>
+            <a href="https://rawg.io/games?search=<%= ERB::Util.url_encode(@rawg_game[:name]) %>" target="_blank" class="button is-link is-small mt-2">Ver más en RAWG</a>
+          </div>
+        </div>
       </div>
     <% end %>
 
@@ -84,7 +109,7 @@
             </div>
             <div class="field">
               <div class="control">
-                <%= f.submit "Publicar reseña", class: "button is-primary" %>
+                <%= f.submit "Publicar reseña", class: "button is-success" %>
               </div>
             </div>
           <% end %>
@@ -116,6 +141,5 @@
         </div>
       <% end %>
     <!-- Fin de la sección de Reseñas -->
-
   </div>
 </section>

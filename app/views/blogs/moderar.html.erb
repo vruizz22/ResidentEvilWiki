@@ -1,13 +1,30 @@
 <section class="section">
   <div class="container">
-    <h1 class="title">Moderar Blogs Pendientes</h1>
+    <h1 class="title mb-5 is-1">Moderar Blogs Pendientes</h1>
 
     <% if @blogs_pendientes.any? %>
       <% @blogs_pendientes.each do |blog| %>
-        <div class="box">
-          <h2 class="subtitle"><%= blog.titulo %></h2>
-          <p><%= blog.descripcion %></p>
-          <p class="has-text-grey is-size-7">
+        <div class="box mb-6">
+          <h2 class="subtitle mb-4"><%= blog.titulo %></h2>
+          <% if blog.attachment.attached? %>
+            <div class="content mb-4">
+              <% if blog.attachment.image? %>
+                <%= cl_image_tag(
+                      blog.attachment.key,
+                      width: 600,
+                      height: 400,
+                      crop: :limit,
+                      quality: :auto,
+                      secure: true,
+                      class: "blog-image mb-4",
+                      loading: "lazy",
+                      alt: "Imagen adjunta del blog"
+                    ) %>
+              <% end %>
+            </div>
+          <% end %>
+          <p class="mb-4"><%= blog.descripcion %></p>
+          <p class="has-text-grey is-size-7 mb-4">
             Enviado por: <%= blog.autor&.nombre || "Sin autor" %>
           </p>
 
@@ -20,14 +37,14 @@
           <%= form_with url: moderar_blog_path(blog), method: :patch, local: true do |f| %>
             <%= hidden_field_tag :estado, 'rechazado' %>
 
-            <div class="field mt-2">
+            <div class="field mt-4 mb-4">
               <label class="label">Motivo del rechazo</label>
               <div class="control">
                 <%= text_area_tag :mensaje_moderacion, "", class: "textarea", placeholder: "Explica por qué fue rechazado..." %>
               </div>
             </div>
 
-            <div class="control mt-2">
+            <div class="control mt-4 mb-4">
               <%= f.submit "Rechazar", class: "button is-danger" %>
             </div>
           <% end %>

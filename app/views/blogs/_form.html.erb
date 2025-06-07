@@ -45,6 +45,14 @@
     </div>
   </div>
 
+  <div class="field mb-4">
+    <%= form.label :game_name, 'Nombre del juego (opcional)', class: "label" %>
+    <div class="control">
+      <%= form.text_field :game_name, class: "input", maxlength: 100, placeholder: "Ej: Resident Evil 4" %>
+    </div>
+    <p class="help">Si quieres mostrar la ficha de un juego, escribe aquí su nombre exacto.</p>
+  </div>
+
   <!-- Campo para adjuntos -->
   <div class="field mb-4" data-controller="preview">
     <%= form.label :attachment, "Adjuntar archivo", class: "label" %>
@@ -76,11 +84,11 @@
 
   <div class="field is-grouped mt-4">
     <div class="control">
-      <%= form.submit submit_text, class: "button is-primary" %>
+      <%= form.submit submit_text, class: "button is-success" %>
     </div>
     <% if local_assigns[:show_cancel] %>
       <div class="control">
-        <%= link_to "Cancelar", cancel_path, class: "button is-light" %>
+        <%= link_to "Cancelar", cancel_path, class: "button is-info" %>
       </div>
     <% end %>
   </div>

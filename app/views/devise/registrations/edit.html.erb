@@ -1,61 +1,151 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="hero is-fullheight  edit-hero">
+  <div class="hero-body is-justify-content-center is-align-items-center edit-hero-body">
+    <div class="container">
+      <div class="box edit-box has-shadow">
+        <h2 class="title is-3 has-text-centered mb-5">Editar perfil</h2>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+          <div class="field mt-5">
+            <%= f.label :email, "Correo electrónico", class: "label" %>
+            <div class="control">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
+            </div>
+          </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div class="notification is-warning is-light mt-3 mb-3">
+              Actualmente esperando confirmación para: <%= resource.unconfirmed_email %>
+            </div>
+          <% end %>
+
+          <div class="field mt-5">
+            <%= f.label :password, "Contraseña", class: "label" %> <span class="is-size-7 has-text-grey-light">(deja en blanco si no quieres cambiarla)</span>
+            <div class="control">
+              <%= f.password_field :password, autocomplete: "new-password", class: "input" %>
+            </div>
+            <% if @minimum_password_length %>
+              <p class="help is-info">(<%= @minimum_password_length %> caracteres mínimo)</p>
+            <% end %>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :password_confirmation, "Confirmar contraseña", class: "label" %>
+            <div class="control">
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :current_password, "Contraseña actual", class: "label" %> <span class="is-size-7 has-text-grey-light">(necesario para confirmar cambios)</span>
+            <div class="control">
+              <%= f.password_field :current_password, autocomplete: "current-password", class: "input" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :nombre, "Nombre", class: "label" %>
+            <div class="control">
+              <%= f.text_field :nombre, class: "input" %>
+            </div>
+          </div>
+          <div class="field mt-5">
+            <%= f.label :descripcion, "Descripción", class: "label" %>
+            <div class="control">
+              <%= f.text_area :descripcion, class: "textarea" %>
+            </div>
+          </div>
+          <div class="field mt-5" data-controller="preview">
+            <%= f.label :imagen_perfil, "Imagen de perfil", class: "label" %>
+            <div id="drop-area" class="control" style="border: 2px dashed #ccc; padding: 100px 20px; border-radius: 8px; text-align: center; cursor: pointer;">
+              <span id="drop-text">Haz clic o arrastra una imagen aquí</span>
+              <%= f.file_field :imagen_perfil, class: "input", style: "display:none;", accept: 'image/png,image/jpeg', data: { preview_target: "input" } %>
+              <% if resource.imagen_perfil.attached? %>
+                <%= cl_image_tag(
+                      resource.imagen_perfil.key,
+                      width: 300,
+                      crop: :limit,
+                      format: :webp,
+                      quality: :auto,
+                      secure: true,
+                      id: "preview",
+                      class: "mt-2",
+                      style: "max-width: 300px;",
+                      alt: "Previsualización de imagen de perfil"
+                    ) %>
+              <% else %>
+                <img id="preview" class="mt-2" style="max-width: 300px; display: none;">
+              <% end %>
+            </div>
+          </div>
+          <div class="field mt-5">
+            <%= f.label :telefono, "Teléfono", class: "label" %>
+            <div class="control">
+              <%= f.text_field :telefono, class: "input" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <div class="control">
+              <%= f.submit "Actualizar", class: "button is-success is-fullwidth is-medium" %>
+            </div>
+          </div>
+        <% end %>
+        <div class="has-text-centered mt-4">
+          <%= button_to "Eliminar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estás seguro?", turbo_confirm: "¿Estás seguro?" }, method: :delete, class: "button is-info mt-2" %>
+        </div>
+        <div class="has-text-centered mt-2">
+          <%= link_to "Volver", :back, class: "" %>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+<script>
+  // Script para previsualización de imagen de perfil
+  document.addEventListener('turbo:load', function() {
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = dropArea ? dropArea.querySelector('input[type="file"]') : null;
+    const preview = document.getElementById('preview');
+    const dropText = document.getElementById('drop-text');
+    if (!dropArea || !fileInput || !preview) return;
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+    dropArea.addEventListener('click', function() {
+      fileInput.click();
+    });
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
+    dropArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '#f0f0f0';
+    });
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    dropArea.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '';
+    });
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
+    dropArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '';
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        fileInput.files = e.dataTransfer.files;
+        showPreview(file);
+      }
+    });
 
-  <!-- Campos adicionales -->
-  <div class="field">
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
-  </div>
-  <div class="field">
-    <%= f.label :descripcion %><br />
-    <%= f.text_area :descripcion %>
-  </div>
-  <div class="field">
-    <%= f.label :imagen_perfil %><br />
-    <%= f.file_field :imagen_perfil %>
-  </div>
-  <div class="field">
-    <%= f.label :telefono %><br />
-    <%= f.text_field :telefono %>
-  </div>
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      showPreview(file);
+    });
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+    function showPreview(file) {
+      if (file && file.type.startsWith('image/')) {
+        preview.style.display = 'block';
+        preview.src = URL.createObjectURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+  });
+</script>

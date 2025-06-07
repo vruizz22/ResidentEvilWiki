@@ -9,12 +9,15 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <!-- FontAwesome CDN para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
 
 
   <body class="has-navbar-fixed-top">
 
-    <nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-fixed-top is-transparent" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <%= link_to root_path, class: "navbar-item" do %>
           <%= image_tag "resident_evil_wiki_logo.png", alt: "Logo", style: "max-width: 100px; height: auto; object-fit: contain;"%>
@@ -41,7 +44,7 @@
           <% if current_user.imagen_perfil.attached? %>
             <%= cl_image_tag(
                   current_user.imagen_perfil.key,
-                  width: 32, height: 32, crop: :fill,
+                  crop: :fill,
                   secure: true,
                   class: "is-rounded mr-2",
                   alt: "Foto de perfil"
@@ -52,14 +55,14 @@
             </span>
           <% end %>
           <span class="mr-4">Hola, <strong><%= current_user.nombre %></strong></span>
-          <%= link_to "Editar Perfil", edit_path, class: "button is-light" %>
-          <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "button is-light ml-2" %>
+          <%= link_to "Editar Perfil", edit_path, class: "button is-success" %>
+          <%= button_to "Salir", destroy_user_session_path, method: :delete, class: "button is-info ml-2" %>
         </div>
           <% else %>
             <div class="navbar-item">
               <div class="buttons">
-                <%= link_to "Registro", new_user_registration_path, class: "button is-light" %>
-                <%= link_to "Iniciar sesión", new_user_session_path, class: "button is-light" %>
+                <%= link_to "Registro", new_user_registration_path, class: "button is-info" %>
+                <%= link_to "Iniciar sesión", new_user_session_path, class: "button is-success" %>
               </div>
             </div>
           <% end %>
@@ -78,15 +81,19 @@
     <%= yield %>
 
     <script>
-      document.addEventListener("turbo:load", () => {
+      document.addEventListener("turbo:load", navbarBurger);
+      function navbarBurger() {
         const burger = document.querySelector(".navbar-burger");
         if (!burger) return;
         const menu = document.getElementById(burger.dataset.target);
-        burger.addEventListener("click", () => {
-          burger.classList.toggle("is-active");
+        // Elimina listeners previos para evitar duplicados
+        burger.replaceWith(burger.cloneNode(true));
+        const newBurger = document.querySelector(".navbar-burger");
+        newBurger.addEventListener("click", () => {
+          newBurger.classList.toggle("is-active");
           menu.classList.toggle("is-active");
         });
-      });
+      }
     </script>
   </body>
 </html>

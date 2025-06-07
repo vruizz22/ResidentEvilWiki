@@ -1,49 +1,124 @@
-<h2>Sign up</h2>
+<div class="hero is-fullheight register-hero">
+  <div class="hero-body is-justify-content-center is-align-items-center register-hero-body">
+    <div class="container">
+      <div class="box register-box has-shadow-heavy">
+        <h2 class="title is-3 has-text-centered mb-5">Crea tu cuenta</h2>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+          <div class="field mt-5">
+            <%= f.label :email, "Correo electrónico", class: "label" %>
+            <div class="control">
+              <%= f.email_field :email, class: "input", autofocus: true, autocomplete: "email" %>
+            </div>
+          </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <div class="field mt-5">
+            <%= f.label :password, "Contraseña", class: "label" %>
+            <% if @minimum_password_length %>
+              <p class="help is-info">(<%= @minimum_password_length %> caracteres mínimo)</p>
+            <% end %>
+            <div class="control">
+              <%= f.password_field :password, class: "input", autocomplete: "new-password" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :password_confirmation, "Confirmar contraseña", class: "label" %>
+            <div class="control">
+              <%= f.password_field :password_confirmation, class: "input", autocomplete: "new-password" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :nombre, "Nombre", class: "label" %>
+            <div class="control">
+              <%= f.text_field :nombre, class: "input" %>
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :descripcion, "Descripción", class: "label" %>
+            <div class="control">
+              <%= f.text_area :descripcion, class: "textarea" %>
+            </div>
+          </div>
+
+          <div class="field mt-5" data-controller="preview">
+            <%= f.label :imagen_perfil, "Imagen de perfil", class: "label" %>
+            <div id="drop-area" class="control" style="border: 2px dashed #ccc; padding: 100px 20px; border-radius: 8px; text-align: center; cursor: pointer;">
+              <span id="drop-text">Haz clic o arrastra una imagen aquí</span>
+              <%= f.file_field :imagen_perfil, class: "input", style: "display:none;", accept: 'image/png,image/jpeg', data: { preview_target: "input" } %>
+              <img id="preview" class="mt-2" style="max-width: 300px; display: none;">
+            </div>
+          </div>
+
+          <div class="field mt-5">
+            <%= f.label :telefono, "Teléfono", class: "label" %>
+            <div class="control">
+              <%= f.text_field :telefono, class: "input" %>
+            </div>
+          </div>
+
+          <div class="field mt-5"> 
+            <div class="control">
+              <%= f.submit "Registrarse", class: "button is-info is-fullwidth is-medium" %>
+            </div>
+          </div>
+        <% end %>
+        <div class="has-text-centered mt-4">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+<script>
+  // Script para previsualización de imagen de perfil
+  document.addEventListener('turbo:load', function() {
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = dropArea ? dropArea.querySelector('input[type="file"]') : null;
+    const preview = document.getElementById('preview');
+    const dropText = document.getElementById('drop-text');
+    if (!dropArea || !fileInput || !preview) return;
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    dropArea.addEventListener('click', function() {
+      fileInput.click();
+    });
 
-  <div class="field">
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
-  </div>
+    dropArea.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '#f0f0f0';
+    });
 
-  <div class="field">
-    <%= f.label :descripcion %><br />
-    <%= f.text_area :descripcion %>
-  </div>
+    dropArea.addEventListener('dragleave', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '';
+    });
 
-  <div class="field">
-    <%= f.label :imagen_perfil %><br />
-    <%= f.file_field :imagen_perfil %>
-  </div>
+    dropArea.addEventListener('drop', function(e) {
+      e.preventDefault();
+      dropArea.style.background = '';
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        fileInput.files = e.dataTransfer.files;
+        showPreview(file);
+      }
+    });
 
-  <div class="field">
-    <%= f.label :telefono %><br />
-    <%= f.text_field :telefono %>
-  </div>
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      showPreview(file);
+    });
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+    function showPreview(file) {
+      if (file && file.type.startsWith('image/')) {
+        preview.style.display = 'block';
+        preview.src = URL.createObjectURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+  });
+</script>
