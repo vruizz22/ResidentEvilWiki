@@ -63,14 +63,12 @@
               <% if resource.imagen_perfil.attached? %>
                 <%= cl_image_tag(
                       resource.imagen_perfil.key,
-                      width: 300,
                       crop: :limit,
                       format: :webp,
                       quality: :auto,
                       secure: true,
                       id: "preview",
                       class: "mt-2",
-                      style: "max-width: 300px;",
                       alt: "Previsualización de imagen de perfil"
                     ) %>
               <% else %>
