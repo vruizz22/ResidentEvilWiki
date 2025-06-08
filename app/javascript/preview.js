@@ -1,7 +1,8 @@
 // Script para previsualización de imágenes en formularios (drag & drop y file input)
 document.addEventListener('turbo:load', function () {
     const dropArea = document.getElementById('drop-area');
-    const fileInput = document.getElementById('blog_attachment') || document.getElementById('solicitud_edicion_attachment');
+    // Selecciona el input file dentro del drop-area (más robusto y compatible)
+    const fileInput = dropArea ? dropArea.querySelector('input[type="file"]') : null;
     const preview = document.getElementById('preview');
     const dropText = document.getElementById('drop-text');
 

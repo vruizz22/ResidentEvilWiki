@@ -5,7 +5,6 @@ import "channels"
 import "navbar"
 import "preview"
 import "tags"
-import "profile_preview"
 import "chat_no_messages"
 
 // Habilita lazy loading para todas las imágenes
