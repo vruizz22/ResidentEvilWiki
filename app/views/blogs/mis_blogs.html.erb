@@ -11,6 +11,8 @@
           <% if blog.estado == "rechazado" && blog.mensaje_moderacion.present? %>
             <p class="has-text-danger mb-2"><strong>Motivo del rechazo:</strong> <%= blog.mensaje_moderacion %></p>
             <%= link_to "Editar y reenviar", editar_rechazado_blog_path(blog), class: "button is-warning" %>
+          <% elsif blog.estado == "rechazado" %>
+            <%= link_to "Editar y reenviar", editar_rechazado_blog_path(blog), class: "button is-warning" %>
           <% else %>
             <%= link_to "Ver blog", blog_path(blog), class: "button is-link" %>
           <% end %>

@@ -9,7 +9,8 @@ class SolicitudesEdicionController < ApplicationController
       titulo: @blog.titulo,
       descripcion: @blog.descripcion,
       tipo_publicacion: @blog.tipo_publicacion,
-      etiquetas: @blog.etiquetas
+      etiquetas: @blog.etiquetas,
+      game_name: @blog.game_name
     )
   end
 

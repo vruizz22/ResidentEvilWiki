@@ -58,8 +58,21 @@
     <%= form.label :attachment, "Adjuntar archivo", class: "label" %>
     <div id="drop-area" class="control" style="border: 2px dashed #ccc; padding: 100px 20px; border-radius: 8px; text-align: center; cursor: pointer;">
       <span id="drop-text">Haz clic o arrastra una imagen aquí</span>
-      <%= form.file_field :attachment, style: "display: none;", id: "blog_attachment" %>
-      <img id="preview" src="#" style="display: none; max-width: 100%; margin-top: 1rem;" />
+      <%= form.file_field :attachment, class: "input", style: "display:none;", accept: 'image/png,image/jpeg,image/webp', data: { preview_target: "input" } %>
+      <% if blog.attachment.attached? %>
+        <%= cl_image_tag(
+              blog.attachment.key,
+              crop: :limit,
+              format: :webp,
+              quality: :auto,
+              secure: true,
+              id: "preview",
+              class: "mt-2",
+              alt: "Previsualización de imagen del blog"
+            ) %>
+      <% else %>
+        <img id="preview" class="mt-2" />
+      <% end %>
     </div>
   </div>
 

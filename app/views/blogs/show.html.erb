@@ -52,7 +52,7 @@
       <%= link_to 'Ir al chat', blog_chat_room_path(@blog), class: 'button is-success' %>  
     </div>
 
-    <% if user_signed_in? && @blog.autor == current_user %>
+    <% if user_signed_in? && @blog.autor == current_user && @blog.estado == "aprobado" %>
       <div class="buttons mt-4">
           <%= link_to "Solicitar edición", new_solicitud_edicion_path(blog_id: @blog.id), class: "button is-info" %>
       </div>
