@@ -2,14 +2,14 @@
   <div class="card">
     <a href="<%= blog_path(blog) %>" class="is-block" style="color: inherit; text-decoration: none;">
       <div class="card-image">
-        <figure class="image is-5by4">
+        <figure class="image is-4by3">
           <% if blog.attachment&.attached? %>
             <%= image_tag blog.attachment, class: "blog-thumb" %>
           <% end %>
         </figure>
       </div>  
       <header class="card-header">
-        <h2 class="title is-5 has-text-centered mb-2 mt-4 p-4"><%= blog.titulo %></h2>
+        <h2 class="title is-5 has-text-centered mt-4 p-4"><%= blog.titulo %></h2>
       </header>
       <div class="card-content">
         <% if blog.created_at.present? %>
