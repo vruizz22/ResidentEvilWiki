@@ -8,14 +8,13 @@
           <% if @blog.attachment.image? %>
             <%= cl_image_tag(
                   @blog.attachment.key,
-                  width: 800,
-                  height: 600,
                   crop: :limit,
                   quality: :auto,
                   secure: true,
                   class: "blog-image",
                   loading: "lazy",
-                  alt: "Imagen adjunta del blog"
+                  alt: "Imagen adjunta del blog",
+                  style: "border-radius: 22px;"
                 ) %>
           <% end %>
         </div>
