@@ -58,10 +58,13 @@
           <% if current_user.imagen_perfil.attached? %>
             <%= cl_image_tag(
                   current_user.imagen_perfil.key,
-                  crop: :fill,
+                  crop: :limit,
+                  quality: :auto,
                   secure: true,
-                  class: "is-rounded mr-2",
-                  alt: "Foto de perfil"
+                  class: "blog-image",
+                  loading: "lazy",
+                  alt: "Imagen adjunta del blog",
+                  style: "border-radius: 22px;"
                 ) %>
           <% else %>
             <span class="icon mr-2">
@@ -95,3 +98,5 @@
     <%= yield %>
   </body>
 </html>
+
+
