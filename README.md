@@ -23,10 +23,19 @@ Debes crear un archivo `.env` en la raíz del proyecto con las siguientes variab
 ```env
 GMAIL_USERNAME=tu_correo@gmail.com
 GMAIL_PASSWORD=contraseña_de_aplicacion_google
+RAWG_API_KEY=tu_api_key_de_rawg
 ```
 
 - **GMAIL_USERNAME**: Correo de Gmail desde el cual se enviarán los emails.
 - **GMAIL_PASSWORD**: Contraseña de aplicación generada desde la configuración de seguridad de Google (no tu contraseña personal).
+- **RAWG_API_KEY**: Clave de API de [RAWG.io](https://rawg.io/apidocs), necesaria para acceder a la base de datos de videojuegos.
+
+Para obtener tu `RAWG_API_KEY`:
+
+1. Regístrate o inicia sesión en [RAWG.io](https://rawg.io/).
+2. Ve a la sección [API](https://rawg.io/apidocs).
+3. Solicita tu API key siguiendo las instrucciones de la página.
+4. Copia la clave y pégala en el archivo `.env` como se muestra arriba.
 
 ### 2. Clave de Rails
 
