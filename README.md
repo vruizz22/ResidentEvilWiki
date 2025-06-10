@@ -1,64 +1,155 @@
-# 2025-1-grupo-56
+# ResidentEvilWiki
 
-## Link de deploy
+ResidentEvilWiki es una aplicación web desarrollada en Ruby on Rails que utiliza Bulma como framework CSS. El proyecto está orientado a la comunidad fan de Resident Evil, permitiendo la creación de blogs, reseñas, chats y más.
 
-<https://mysite-vqbg.onrender.com>
+---
 
-## Usuario Moderador
+## Requisitos Previos
 
-- nombre: `Moderador`
-- email: `moderador@uc.cl`
-- password: `123456`
+- **Ruby** 3.3.6
+- **Rails** 7.1.5.1
+- **Node.js** (recomendado instalar vía nvm o brew)
+- **PostgreSQL**
+- **Yarn** o **npm**
 
-### Para el desarrollo con Bulma
+---
 
-terminal 1:
+## Configuración Inicial
 
-```bash
-npm install                                # instala Bulma y Sass desde package.json
-npm run build:css                          # compila application.css primero
-npm run watch:css                          # regenerará application.css al vuelo
+### 1. Variables de Entorno
+
+Debes crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
+
+```env
+GMAIL_USERNAME=tu_correo@gmail.com
+GMAIL_PASSWORD=contraseña_de_aplicacion_google
+RAWG_API_KEY=tu_api_key_de_rawg
 ```
 
-terminal 2:
+- **GMAIL_USERNAME**: Correo de Gmail desde el cual se enviarán los emails.
+- **GMAIL_PASSWORD**: Contraseña de aplicación generada desde la configuración de seguridad de Google (no tu contraseña personal).
+- **RAWG_API_KEY**: Clave de API de [RAWG.io](https://rawg.io/apidocs), necesaria para acceder a la base de datos de videojuegos.
+
+Para obtener tu `RAWG_API_KEY`:
+
+1. Regístrate o inicia sesión en [RAWG.io](https://rawg.io/).
+2. Ve a la sección [API](https://rawg.io/apidocs).
+3. Solicita tu API key siguiendo las instrucciones de la página.
+4. Copia la clave y pégala en el archivo `.env` como se muestra arriba.
+
+### 2. Clave de Rails
+
+Debes tener el archivo `config/master.key` con la clave secreta de Rails. Si no tienes este archivo, solicita la clave al equipo de desarrollo o genera una nueva con:
+
+```bash
+EDITOR="code --wait" bin/rails credentials:edit
+```
+
+Esto generará el archivo y la clave necesaria para desencriptar las credenciales.
+
+---
+
+## Instalación y Primer Arranque
+
+Sigue este orden de comandos para instalar y preparar el entorno desde cero:
+
+```bash
+rm -rf storage/*
+bundle install
+npm install    
+bin/rails db:drop db:create db:migrate db:seed
+npm run build:css
+bundle exec rails assets:precompile
+bundle exec rails assets:clean
+rails dev:cache
+```
+
+- Elimina archivos temporales y de almacenamiento.
+- Instala gemas y dependencias de Node.
+- Prepara la base de datos y carga los datos de ejemplo.
+- Compila los estilos de Bulma.
+- Precompila y limpia los assets de Rails.
+- Activa el cache de desarrollo para evitar consumir la API en cada consulta.
+
+---
+
+## Arranque del servidor
+
+En dos terminales distintas:
 
 ```bash
 rails s
 ```
 
-Esto es necesario para que los cambios en el CSS se vean reflejados al instante. Si no se hace, hay que esperar a que el servidor de Rails lo compile, lo cual puede tardar un poco.
-
-Finalmente, reiniciar la base de datos local, para evitar errores de imagenes el local storage y utilizar el mismo esquema de la base de datos del deploy:
-
 ```bash
-bin/rails db:drop db:create db:migrate db:seed
+npm run watch:css
 ```
 
-y borrar todo dentro de `storage`:
+- El primer comando inicia el servidor Rails.
+- El segundo mantiene la compilación de CSS en tiempo real.
 
-```bash
-rm -rf storage/*
-```
+---
 
-### En desarrollo local
+## Flujo de trabajo para cambios en estilos
 
-Por cada cambio importante en aplication.bulma.scss, es necesario correr:
+Cada vez que realices un cambio importante en un archivo `.scss`:
 
-```bash
-npm run build:css
-bundle exec rails assets:clobber
-bundle exec rails assets:precompile
-bundle exec rails assets:clean
-```
+1. Detén ambos procesos (`rails s` y `npm run watch:css`).
+2. Ejecuta:
 
-Esto es necesario para que los cambios se vean reflejados en el local storage y en el servidor de Rails.
+    ```bash
+    npm run build:css
+    bundle exec rails assets:precompile
+    bundle exec rails assets:clean
+    ```
 
-#### API
+3. Vuelve a iniciar ambos procesos:
 
-Para no consumir en cada consulta la API, ejecuta el siguiente comando:
+    ```bash
+    rails s
+    npm run watch:css
+    ```
 
-```bash
-rails dev:cache
-```
+---
 
-Esto hará que la API se cachee y no se consuma en cada consulta, lo cual es útil para el desarrollo local.
+## Dependencias principales
+
+- **Ruby on Rails**: Framework backend principal.
+- **Bulma**: Framework CSS.
+- **Sass**: Preprocesador CSS.
+- **Devise**: Autenticación de usuarios.
+- **Cloudinary**: Almacenamiento de imágenes.
+- **dotenv-rails**: Manejo de variables de entorno.
+- **Redis**: Soporte para Action Cable (WebSockets).
+- **Importmap, Turbo, Stimulus**: SPA-like y JS moderno sin Webpack.
+
+Consulta el `Gemfile` y `package.json` para más detalles.
+
+---
+
+## Documentación adicional
+
+- `docs/diagrama-entidad-relacion.pdf`: Diagrama entidad-relación de la base de datos. Útil para entender la estructura y relaciones entre modelos.
+- `docs/Paleta.pdf`: Paleta de colores oficial del proyecto para mantener la coherencia visual.
+- Otros archivos en `docs/` pueden contener información relevante sobre la arquitectura, decisiones de diseño y manuales de usuario.
+
+---
+
+## Notas adicionales
+
+- El sistema de autenticación requiere que el correo y la contraseña de aplicación sean válidos para el envío de emails (recuperación de contraseña, confirmaciones, etc).
+- El archivo `master.key` es esencial para desencriptar las credenciales y variables sensibles de Rails.
+- El almacenamiento de imágenes se realiza en Cloudinary, asegúrate de tener configuradas las credenciales necesarias en las variables de entorno o en las credenciales de Rails.
+
+---
+
+## Recursos útiles
+
+- [Guía oficial de Rails](https://guides.rubyonrails.org/)
+- [Documentación de Bulma](https://bulma.io/documentation/)
+- [Documentación de Devise](https://github.com/heartcombo/devise)
+- [Cloudinary para Rails](https://cloudinary.com/documentation/rails_integration)
+
+---
+
+Para cualquier duda adicional, revisa los archivos en la carpeta `docs/` o contacta al equipo de desarrollo.
