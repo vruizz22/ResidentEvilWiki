@@ -46,3 +46,6 @@ node_modules/
 
 app/assets/builds/
 
+# Ignore coverage reports.
+coverage/
+
