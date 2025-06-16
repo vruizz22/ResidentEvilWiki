@@ -21,24 +21,19 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y postgresql-client jq gh
 
-      - name: Dump current DB
+      - name: Dump current DB (External URL)
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          # Extraer credenciales de URL (soporta postgresql:// y postgres://)
+          # Extraer credenciales de URL externa
           uri="$DATABASE_URL"
-          # Elimina el prefijo protocol://
           no_proto=${uri#*://}
-          # Usuario: antes de ':'
           user=${no_proto%%:*}
-          # Contraseña: entre ':' y '@'
           pass=${no_proto#*:}; pass=${pass%%@*}
-          # Host: entre '@' y '/'
           host=${no_proto#*@}; host=${host%%/*}
-          # DB name: tras '/', sin query
           dbname=${no_proto#*/}; dbname=${dbname%%\?*}
 
-          echo "User: $user, Host: $host, Database: $dbname"
+          echo "Backup desde: user=$user host=$host db=$dbname"
           PGPASSWORD="$pass" pg_dump \
             --format=custom --clean --no-owner \
             --host="$host" --username="$user" "$dbname" \
@@ -64,12 +59,12 @@ jobs:
                  "plan":"free",
                  "region":"oregon"
                }')
-          new_url=$(echo "$response" | jq -r '.service.connectionInfo.databaseUrl')
-          echo "dburl=$new_url" >> $GITHUB_OUTPUT
+          # connectionInfo.databaseUrl es la INTERNAL URL en Render
+          internal_url=$(echo "$response" | jq -r '.service.connectionInfo.databaseUrl')
+          echo "internal_url=$internal_url" >> $GITHUB_OUTPUT
 
-      - name: Update DATABASE_URL secret
-        # Usa GitHub CLI para actualizar el secret
-        run: gh secret set DATABASE_URL --body "${{ steps.newdb.outputs.dburl }}"
+      - name: Update DATABASE_URL secret (External -> Internal?)
+        run: gh secret set DATABASE_URL --body "${{ steps.newdb.outputs.internal_url }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -77,18 +72,20 @@ jobs:
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
           WEB_SERVICE_ID: ${{ secrets.WEB_SERVICE_ID }}
+          INTERNAL_URL: ${{ steps.newdb.outputs.internal_url }}
         run: |
-          # Actualizar env var y desplegar app en Render
+          # Tu app usará la INTERNAL URL de Render
           curl -s -X PATCH https://api.render.com/v1/services/$WEB_SERVICE_ID \
             -H "Authorization: Bearer $RENDER_API_KEY" \
             -H "Content-Type: application/json" \
-            -d '{"envVars":[{"key":"DATABASE_URL","value":"'${{ steps.newdb.outputs.dburl }}'"}]}'
+            -d '{"envVars":[{"key":"DATABASE_URL","value":"'${INTERNAL_URL}'"}]}'
           curl -s -X POST https://api.render.com/v1/services/$WEB_SERVICE_ID/deploys \
             -H "Authorization: Bearer $RENDER_API_KEY"
 
       - name: Restore backup to new DB
         env:
-          NEW_DATABASE_URL: ${{ steps.newdb.outputs.dburl }}
+          # Usa External URL para pg_restore
+          NEW_DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           uri="$NEW_DATABASE_URL"
           no_proto=${uri#*://}
@@ -102,7 +99,7 @@ jobs:
             --verbose --clean --no-owner \
             --host="$host" --username="$user" --dbname="$dbname" \
             dump-*.backup
-          echo "Restauración completa."
+          echo "Restauración completa en la nueva base de datos."
 
 # USO:
 # 1) Crear en GitHub → Settings → Secrets:
