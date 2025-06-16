@@ -68,7 +68,7 @@ jobs:
             --header 'Accept: application/json' \
             --header "Authorization: Bearer $RENDER_API_KEY")
           echo "Respuesta /v1/owners principal: $owners1"
-          ownerid1=$(echo "$owners1" | jq -r '.[0].id')
+          ownerid1=$(echo "$owners1" | jq -r '.[0].owner.id')
           echo "ownerId principal: $ownerid1"
           echo "ownerid1=$ownerid1" >> $GITHUB_OUTPUT
           echo "\n---\n"
@@ -83,7 +83,7 @@ jobs:
             --header 'Accept: application/json' \
             --header "Authorization: Bearer $RENDER_API_KEY_nuevo")
           echo "Respuesta /v1/owners secundaria: $owners2"
-          ownerid2=$(echo "$owners2" | jq -r '.[0].id')
+          ownerid2=$(echo "$owners2" | jq -r '.[0].owner.id')
           echo "ownerId secundario: $ownerid2"
           echo "ownerid2=$ownerid2" >> $GITHUB_OUTPUT
           echo "\n---\n"
