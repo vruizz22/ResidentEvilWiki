@@ -51,6 +51,24 @@ jobs:
           name: db-backup-$(date +'%F')
           path: dump-*.backup
 
+      - name: Test Render API keys
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_API_KEY_nuevo: ${{ secrets.RENDER_API_KEY_nuevo }}
+        run: |
+          echo "Probando RENDER_API_KEY (cuenta principal):"
+          curl --request GET \
+            --url 'https://api.render.com/v1/services?limit=20' \
+            --header 'Accept: application/json' \
+            --header "Authorization: Bearer $RENDER_API_KEY"
+          echo "\n---\n"
+          echo "Probando RENDER_API_KEY_nuevo (cuenta secundaria):"
+          curl --request GET \
+            --url 'https://api.render.com/v1/services?limit=20' \
+            --header 'Accept: application/json' \
+            --header "Authorization: Bearer $RENDER_API_KEY_nuevo"
+          echo "\n---\n"
+
       - name: Create new Render DB
         id: newdb
         env:
