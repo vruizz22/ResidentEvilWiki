@@ -1,0 +1,71 @@
+# Workflow para backup y restauración automática de la base de datos
+# - Realiza un backup de la base de datos actual (DATABASE_URL)
+# - Sube el backup como artifact descargable desde GitHub Actions
+# - Descarga el backup y lo restaura automáticamente en una base de datos Supabase (SUPABASE_DB_URL)
+# - No depende de Render, ni crea ni rota bases de datos, solo migra el backup a Supabase
+
+name: Backup and Restore to Supabase
+
+on:
+  workflow_dispatch: # Permite ejecución manual desde la UI
+
+jobs:
+  backup-and-restore:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client jq gh
+
+      - name: Dump current DB (External URL)
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          # Extraer credenciales de URL externa
+          uri="$DATABASE_URL"
+          no_proto=${uri#*://}
+          user=${no_proto%%:*}
+          pass=${no_proto#*:}; pass=${pass%%@*}
+          host=${no_proto#*@}; host=${host%%/*}
+          dbname=${no_proto#*/}; dbname=${dbname%%\?*}
+
+          echo "Backup desde: user=$user host=$host db=$dbname"
+          PGPASSWORD="$pass" pg_dump \
+            --format=custom --clean --no-owner \
+            --host="$host" --username="$user" "$dbname" \
+            -f dump-$(date +'%F').backup
+
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: db-backup-$(date +'%F')
+          path: dump-*.backup
+
+      - name: Descargar backup para restaurar en Supabase
+        uses: actions/download-artifact@v4
+        with:
+          name: db-backup-$(date +'%F')
+
+      - name: Restaurar backup en Supabase
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          uri="$SUPABASE_DB_URL"
+          no_proto=${uri#*://}
+          user=${no_proto%%:*}
+          pass=${no_proto#*:}; pass=${pass%%@*}
+          host_port_db=${no_proto#*@}
+          host=${host_port_db%%:*}
+          port_db=${host_port_db#*:}
+          port=${port_db%%/*}
+          dbname=${port_db#*/}; dbname=${dbname%%\?*}
+
+          echo "Restaurando en: user=$user host=$host port=$port db=$dbname"
+          PGPASSWORD="$pass" pg_restore \
+            --verbose --clean --no-owner \
+            --host="$host" --port="$port" --username="$user" --dbname="$dbname" \
+            dump-*.backup
+          echo "Restauración completa en la nueva base de datos."
