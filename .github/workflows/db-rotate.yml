@@ -51,28 +51,42 @@ jobs:
           name: db-backup-$(date +'%F')
           path: dump-*.backup
 
-      - name: Test Render API keys
+      - name: Test Render API keys y obtener ownerId
+        id: test-keys
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
           RENDER_API_KEY_nuevo: ${{ secrets.RENDER_API_KEY_nuevo }}
         run: |
           echo "Probando RENDER_API_KEY (cuenta principal):"
-          curl --request GET \
-            --url 'https://api.render.com/v1/services?limit=20' \
+          resp1=$(curl -s --request GET \
+            --url 'https://api.render.com/v1/services?limit=1' \
             --header 'Accept: application/json' \
-            --header "Authorization: Bearer $RENDER_API_KEY"
+            --header "Authorization: Bearer $RENDER_API_KEY")
+          ownerid1=$(curl -s --request GET \
+            --url 'https://api.render.com/v1/owners' \
+            --header 'Accept: application/json' \
+            --header "Authorization: Bearer $RENDER_API_KEY" | jq -r '.[0].id')
+          echo "ownerId principal: $ownerid1"
+          echo "ownerid1=$ownerid1" >> $GITHUB_OUTPUT
           echo "\n---\n"
           echo "Probando RENDER_API_KEY_nuevo (cuenta secundaria):"
-          curl --request GET \
-            --url 'https://api.render.com/v1/services?limit=20' \
+          resp2=$(curl -s --request GET \
+            --url 'https://api.render.com/v1/services?limit=1' \
             --header 'Accept: application/json' \
-            --header "Authorization: Bearer $RENDER_API_KEY_nuevo"
+            --header "Authorization: Bearer $RENDER_API_KEY_nuevo")
+          ownerid2=$(curl -s --request GET \
+            --url 'https://api.render.com/v1/owners' \
+            --header 'Accept: application/json' \
+            --header "Authorization: Bearer $RENDER_API_KEY_nuevo" | jq -r '.[0].id')
+          echo "ownerId secundario: $ownerid2"
+          echo "ownerid2=$ownerid2" >> $GITHUB_OUTPUT
           echo "\n---\n"
 
       - name: Create new Render DB
         id: newdb
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY_nuevo }}
+          OWNER_ID_NUEVO: ${{ steps.test-keys.outputs.ownerid2 }}
         run: |
           response=$(curl -s -X POST https://api.render.com/v1/services \
             -H "Authorization: Bearer $RENDER_API_KEY" \
@@ -81,7 +95,8 @@ jobs:
                  "serviceType":"postgresql",
                  "name":"ResidentEvilWiki-DB",
                  "plan":"free",
-                 "region":"oregon"
+                 "region":"oregon",
+                 "ownerId":"'"$OWNER_ID_NUEVO"'"
                }')
           echo "Render API response: $response"
           external_url=$(echo "$response" | jq -r '.service.connectionInfo.externalDatabaseUrl')
