@@ -1,8 +1,8 @@
-# Workflow para backup y restauración automática de la base de datos
+# Workflow para backup y restauración automática de la base de datos a Supabase
 # - Realiza un backup de la base de datos actual (DATABASE_URL)
 # - Sube el backup como artifact descargable desde GitHub Actions
 # - Descarga el backup y lo restaura automáticamente en una base de datos Supabase (SUPABASE_DB_URL)
-# - No depende de Render, ni crea ni rota bases de datos, solo migra el backup a Supabase
+# - Fuerza IPv4 y SSL para conectar a Supabase
 
 name: Backup and Restore to Supabase
 
@@ -18,13 +18,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y postgresql-client jq gh
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client jq iproute2
 
       - name: Dump current DB (External URL)
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          # Extraer credenciales de URL externa
           uri="$DATABASE_URL"
           no_proto=${uri#*://}
           user=${no_proto%%:*}
@@ -49,7 +50,7 @@ jobs:
         with:
           name: db-backup-$(date +'%F')
 
-      - name: Restaurar backup en Supabase
+      - name: Restaurar backup en Supabase (IPv4 + SSL)
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
@@ -57,15 +58,24 @@ jobs:
           no_proto=${uri#*://}
           user=${no_proto%%:*}
           pass=${no_proto#*:}; pass=${pass%%@*}
+          # Extraer host:port/db
           host_port_db=${no_proto#*@}
           host=${host_port_db%%:*}
           port_db=${host_port_db#*:}
           port=${port_db%%/*}
           dbname=${port_db#*/}; dbname=${dbname%%\?*}
 
-          echo "Restaurando en: user=$user host=$host port=$port db=$dbname"
-          PGPASSWORD="$pass" pg_restore \
+          echo "Resolviendo IPv4 de $host..."
+          ipv4=$(getent ahosts $host | awk '/STREAM/ && /IPv4/ {print $1; exit}')
+          if [[ -z "$ipv4" ]]; then
+            echo "No se pudo resolver IPv4 para $host, usando hostname directamente."
+            ipv4="$host"
+          fi
+
+          echo "Restaurando en: user=$user host=$ipv4 port=$port db=$dbname (SSL Mode=require)"
+          PGPASSWORD="$pass" PGHOST="$ipv4" PGPORT="$port" PGUSER="$user" PGDATABASE="$dbname" PGSSLMODE=require pg_restore \
             --verbose --clean --no-owner \
-            --host="$host" --port="$port" --username="$user" --dbname="$dbname" \
+            --host="$ipv4" --port="$port" --username="$user" --dbname="$dbname" \
             dump-*.backup
-          echo "Restauración completa en la nueva base de datos."
+
+          echo "Restauración completa en Supabase."
