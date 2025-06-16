@@ -5,7 +5,7 @@
 name: Rotate Render DB
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Permite ejecución manual desde la UI
   schedule:
     # Cada 20 días a medianoche (UTC)
     - cron: "0 0 */20 * *"
@@ -36,7 +36,7 @@ jobs:
             -f dump-$(date +'%F').backup
 
       - name: Upload backup artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: db-backup-$(date +'%F')
           path: dump-*.backup
