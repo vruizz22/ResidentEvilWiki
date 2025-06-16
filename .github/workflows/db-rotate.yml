@@ -1,8 +1,15 @@
 # Workflow para rotar la base de datos de Render cada 20 días
-# - Usa un solo secret DATABASE_URL para credenciales.
+# - Usa un solo secret DATABASE_URL para credenciales (External URL para backup).
 # - Genera backup, crea nueva BD, actualiza el secret y restaura datos.
+# - La app en Render usará la Internal URL para la conexión.
 
 name: Rotate Render DB
+
+# Permisos necesarios para actualizar secrets:
+permissions:
+  contents: read
+  actions: write
+  id-token: write
 
 on:
   workflow_dispatch: # Permite ejecución manual desde la UI
@@ -66,7 +73,15 @@ jobs:
           echo "external_url=$external_url" >> $GITHUB_OUTPUT
 
       - name: Update repo secret DATABASE_URL to External URL
-        run: gh secret set DATABASE_URL --body "${{ steps.newdb.outputs.external_url }}"
+        run: |
+          # Usa external_url si existe, sino internal_url como fallback
+          ext_url="${{ steps.newdb.outputs.external_url }}"
+          if [[ -z "$ext_url" || "$ext_url" == "null" ]]; then
+            echo "external_url no disponible; usando internal_url"
+            ext_url="${{ steps.newdb.outputs.internal_url }}"
+          fi
+          echo "Actualizando secret DATABASE_URL a: $ext_url"
+          gh secret set DATABASE_URL --body "$ext_url"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
