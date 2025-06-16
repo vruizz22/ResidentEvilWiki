@@ -65,7 +65,7 @@ jobs:
                  "plan":"free",
                  "region":"oregon"
                }')
-          # Desde connectionInfo.databaseUrl extraemos la URL externa
+          echo "Render API response: $response"
           external_url=$(echo "$response" | jq -r '.service.connectionInfo.externalDatabaseUrl')
           echo "external_url=$external_url" >> $GITHUB_OUTPUT
 
@@ -83,7 +83,7 @@ jobs:
 
       - name: Update web service and trigger deploy
         env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY_actual }}
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
           WEB_SERVICE_ID: ${{ secrets.WEB_SERVICE_ID }}
           EXTERNAL_URL: ${{ steps.newdb.outputs.external_url }}
         run: |
