@@ -62,10 +62,13 @@ jobs:
             --url 'https://api.render.com/v1/services?limit=1' \
             --header 'Accept: application/json' \
             --header "Authorization: Bearer $RENDER_API_KEY")
-          ownerid1=$(curl -s --request GET \
+          echo "Respuesta /v1/services principal: $resp1"
+          owners1=$(curl -s --request GET \
             --url 'https://api.render.com/v1/owners' \
             --header 'Accept: application/json' \
-            --header "Authorization: Bearer $RENDER_API_KEY" | jq -r '.[0].id')
+            --header "Authorization: Bearer $RENDER_API_KEY")
+          echo "Respuesta /v1/owners principal: $owners1"
+          ownerid1=$(echo "$owners1" | jq -r '.[0].id')
           echo "ownerId principal: $ownerid1"
           echo "ownerid1=$ownerid1" >> $GITHUB_OUTPUT
           echo "\n---\n"
@@ -74,10 +77,13 @@ jobs:
             --url 'https://api.render.com/v1/services?limit=1' \
             --header 'Accept: application/json' \
             --header "Authorization: Bearer $RENDER_API_KEY_nuevo")
-          ownerid2=$(curl -s --request GET \
+          echo "Respuesta /v1/services secundaria: $resp2"
+          owners2=$(curl -s --request GET \
             --url 'https://api.render.com/v1/owners' \
             --header 'Accept: application/json' \
-            --header "Authorization: Bearer $RENDER_API_KEY_nuevo" | jq -r '.[0].id')
+            --header "Authorization: Bearer $RENDER_API_KEY_nuevo")
+          echo "Respuesta /v1/owners secundaria: $owners2"
+          ownerid2=$(echo "$owners2" | jq -r '.[0].id')
           echo "ownerId secundario: $ownerid2"
           echo "ownerid2=$ownerid2" >> $GITHUB_OUTPUT
           echo "\n---\n"
