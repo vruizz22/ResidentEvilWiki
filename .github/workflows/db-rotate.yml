@@ -59,12 +59,14 @@ jobs:
                  "plan":"free",
                  "region":"oregon"
                }')
-          # connectionInfo.databaseUrl es la INTERNAL URL en Render
+          # Desde connectionInfo.databaseUrl extraemos las URLs internal y external
           internal_url=$(echo "$response" | jq -r '.service.connectionInfo.databaseUrl')
+          external_url=$(echo "$response" | jq -r '.service.connectionInfo.externalDatabaseUrl')
           echo "internal_url=$internal_url" >> $GITHUB_OUTPUT
+          echo "external_url=$external_url" >> $GITHUB_OUTPUT
 
-      - name: Update DATABASE_URL secret (External -> Internal?)
-        run: gh secret set DATABASE_URL --body "${{ steps.newdb.outputs.internal_url }}"
+      - name: Update repo secret DATABASE_URL to External URL
+        run: gh secret set DATABASE_URL --body "${{ steps.newdb.outputs.external_url }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -74,18 +76,18 @@ jobs:
           WEB_SERVICE_ID: ${{ secrets.WEB_SERVICE_ID }}
           INTERNAL_URL: ${{ steps.newdb.outputs.internal_url }}
         run: |
-          # Tu app usará la INTERNAL URL de Render
+          # Actualiza la variable DATABASE_URL de tu app a la Internal URL
           curl -s -X PATCH https://api.render.com/v1/services/$WEB_SERVICE_ID \
             -H "Authorization: Bearer $RENDER_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{"envVars":[{"key":"DATABASE_URL","value":"'${INTERNAL_URL}'"}]}'
+          # Dispara un nuevo deploy
           curl -s -X POST https://api.render.com/v1/services/$WEB_SERVICE_ID/deploys \
             -H "Authorization: Bearer $RENDER_API_KEY"
 
-      - name: Restore backup to new DB
+      - name: Restore backup to new DB (External URL)
         env:
-          # Usa External URL para pg_restore
-          NEW_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEW_DATABASE_URL: ${{ steps.newdb.outputs.external_url }}
         run: |
           uri="$NEW_DATABASE_URL"
           no_proto=${uri#*://}
@@ -109,3 +111,25 @@ jobs:
 #  2) Añadir este archivo a .github/workflows
 # 3) Cada 20 días el workflow hará backup, creará nueva DB,
 #    actualizará el secret y restaurará los datos automáticamente.
+#
+# ---
+# NOTA SOBRE LAS URLS DE BASE DE DATOS EN ESTE WORKFLOW
+#
+# Este workflow rota la base de datos de Render y maneja dos tipos de URL:
+#
+# 1. EXTERNAL DATABASE URL: Es la URL de conexión externa de la base de datos (accesible desde fuera de Render).
+#    - Se guarda como secret DATABASE_URL en el repositorio.
+#    - Se usa para hacer backups y restauraciones desde GitHub Actions u otros servicios externos.
+#
+# 2. INTERNAL DATABASE URL: Es la URL interna de la base de datos (solo accesible desde servicios dentro de Render).
+#    - Se configura como variable de entorno DATABASE_URL en el deploy de la app en Render.
+#    - Es más segura y rápida para la app, ya que no expone la base de datos al exterior.
+#
+# FLUJO RESUMIDO:
+# - El secret DATABASE_URL del repo siempre apunta a la EXTERNAL URL de la base de datos más reciente.
+# - La variable de entorno DATABASE_URL en Render siempre apunta a la INTERNAL URL de la base de datos más reciente.
+# - Así, los workflows y desarrolladores externos usan la EXTERNAL URL, y la app en Render usa la INTERNAL URL.
+#
+# Esto garantiza seguridad, flexibilidad y automatización en la rotación periódica de la base de datos.
+# ---
+
