@@ -1,7 +1,6 @@
 # Workflow para rotar la base de datos de Render cada 20 días
 # - Usa un solo secret DATABASE_URL para credenciales (External URL para backup).
 # - Genera backup, crea nueva BD, actualiza el secret y restaura datos.
-# - La app en Render usará la Internal URL para la conexión.
 
 name: Rotate Render DB
 
@@ -55,7 +54,7 @@ jobs:
       - name: Create new Render DB
         id: newdb
         env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY_nuevo }}
         run: |
           response=$(curl -s -X POST https://api.render.com/v1/services \
             -H "Authorization: Bearer $RENDER_API_KEY" \
@@ -66,19 +65,16 @@ jobs:
                  "plan":"free",
                  "region":"oregon"
                }')
-          # Desde connectionInfo.databaseUrl extraemos las URLs internal y external
-          internal_url=$(echo "$response" | jq -r '.service.connectionInfo.databaseUrl')
+          # Desde connectionInfo.databaseUrl extraemos la URL externa
           external_url=$(echo "$response" | jq -r '.service.connectionInfo.externalDatabaseUrl')
-          echo "internal_url=$internal_url" >> $GITHUB_OUTPUT
           echo "external_url=$external_url" >> $GITHUB_OUTPUT
 
       - name: Update repo secret DATABASE_URL to External URL
         run: |
-          # Usa external_url si existe, sino internal_url como fallback
           ext_url="${{ steps.newdb.outputs.external_url }}"
           if [[ -z "$ext_url" || "$ext_url" == "null" ]]; then
-            echo "external_url no disponible; usando internal_url"
-            ext_url="${{ steps.newdb.outputs.internal_url }}"
+            echo "ERROR: external_url no disponible. No se actualiza el secret DATABASE_URL."
+            exit 1
           fi
           echo "Actualizando secret DATABASE_URL a: $ext_url"
           gh secret set DATABASE_URL --body "$ext_url"
@@ -87,15 +83,15 @@ jobs:
 
       - name: Update web service and trigger deploy
         env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY_actual }}
           WEB_SERVICE_ID: ${{ secrets.WEB_SERVICE_ID }}
-          INTERNAL_URL: ${{ steps.newdb.outputs.internal_url }}
+          EXTERNAL_URL: ${{ steps.newdb.outputs.external_url }}
         run: |
-          # Actualiza la variable DATABASE_URL de tu app a la Internal URL
+          # Actualiza la variable DATABASE_URL de tu app a la External URL
           curl -s -X PATCH https://api.render.com/v1/services/$WEB_SERVICE_ID \
             -H "Authorization: Bearer $RENDER_API_KEY" \
             -H "Content-Type: application/json" \
-            -d '{"envVars":[{"key":"DATABASE_URL","value":"'${INTERNAL_URL}'"}]}'
+            -d '{"envVars":[{"key":"DATABASE_URL","value":"'${EXTERNAL_URL}'"}]}'
           # Dispara un nuevo deploy
           curl -s -X POST https://api.render.com/v1/services/$WEB_SERVICE_ID/deploys \
             -H "Authorization: Bearer $RENDER_API_KEY"
