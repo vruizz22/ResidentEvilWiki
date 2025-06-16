@@ -25,11 +25,20 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
+          # Extraer credenciales de URL (soporta postgresql:// y postgres://)
           uri="$DATABASE_URL"
-          user=$(echo  $uri | sed -E 's|postgres://([^:]+):.*@.*|\1|')
-          pass=$(echo  $uri | sed -E 's|postgres://[^:]+:([^@]+)@.*|\1|')
-          host=$(echo  $uri | sed -E 's|postgres://[^@]+:[^@]+@([^/:]+):?.*|\1|')
-          dbname=$(echo $uri | sed -E 's|.*/([^?]+).*|\1|')
+          # Elimina el prefijo protocol://
+          no_proto=${uri#*://}
+          # Usuario: antes de ':'
+          user=${no_proto%%:*}
+          # Contraseña: entre ':' y '@'
+          pass=${no_proto#*:}; pass=${pass%%@*}
+          # Host: entre '@' y '/'
+          host=${no_proto#*@}; host=${host%%/*}
+          # DB name: tras '/', sin query
+          dbname=${no_proto#*/}; dbname=${dbname%%\?*}
+
+          echo "User: $user, Host: $host, Database: $dbname"
           PGPASSWORD="$pass" pg_dump \
             --format=custom --clean --no-owner \
             --host="$host" --username="$user" "$dbname" \
@@ -59,10 +68,8 @@ jobs:
           echo "dburl=$new_url" >> $GITHUB_OUTPUT
 
       - name: Update DATABASE_URL secret
-        # Usamos la GitHub CLI para actualizar el secret directamente
-        run: |
-          echo "Actualizando secret DATABASE_URL..."
-          gh secret set DATABASE_URL --body "${{ steps.newdb.outputs.dburl }}"
+        # Usa GitHub CLI para actualizar el secret
+        run: gh secret set DATABASE_URL --body "${{ steps.newdb.outputs.dburl }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -84,15 +91,18 @@ jobs:
           NEW_DATABASE_URL: ${{ steps.newdb.outputs.dburl }}
         run: |
           uri="$NEW_DATABASE_URL"
-          user=$(echo  $uri | sed -E 's|postgres://([^:]+):.*@.*|\1|')
-          pass=$(echo  $uri | sed -E 's|postgres://[^:]+:([^@]+)@.*|\1|')
-          host=$(echo  $uri | sed -E 's|postgres://[^@]+:[^@]+@([^/:]+):?.*|\1|')
-          dbname=$(echo $uri | sed -E 's|.*/([^?]+).*|\1|')
+          no_proto=${uri#*://}
+          user=${no_proto%%:*}
+          pass=${no_proto#*:}; pass=${pass%%@*}
+          host=${no_proto#*@}; host=${host%%/*}
+          dbname=${no_proto#*/}; dbname=${dbname%%\?*}
+
+          echo "Restaurando en: user=$user host=$host db=$dbname"
           PGPASSWORD="$pass" pg_restore \
             --verbose --clean --no-owner \
             --host="$host" --username="$user" --dbname="$dbname" \
             dump-*.backup
-          echo "Restauración completa en la nueva base de datos."
+          echo "Restauración completa."
 
 # USO:
 # 1) Crear en GitHub → Settings → Secrets:
